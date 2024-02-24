@@ -41,7 +41,5 @@
             </Grid.RowDefinitions>
 
         </Grid>
-        <Button Content="next" Width="124" Height="82" Click="Continue_Click" Margin="105,6,0,0" VerticalAlignment="Center"/>
-        <Button Content="test bot fire" Height="70" Width="124" Click="Button_Click_1" VerticalAlignment="Center" Margin="105,200,0,0"/>
     </Grid>
 </Page>

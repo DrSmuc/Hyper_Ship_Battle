@@ -420,15 +420,5 @@ namespace Hyper_Ship_Battle
                 allowed = true;
             }
         }
-
-        private void Continue_Click(object sender, RoutedEventArgs e)
-        {
-            continue_f();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            BotTurn();
-        }
     }
 }
