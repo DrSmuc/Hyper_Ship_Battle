@@ -46,21 +46,26 @@ namespace Hyper_Ship_Battle
         //robot stuff begin
         private int x; //row
         private int y; //col
-        private bool pastHit = false;
+        private int pastHit = 0;
+        private int direction = 0;
+        private int firstHitX;
+        private int firstHitY;
+        private int lastHitX;
+        private int lastHitY;
         //counters
-        private int p_br2 = 2;
-        private int p_br3 = 3;
-        private int p_br4 = 4;
-        private int p_br5 = 5;
-        private int p_br6 = 2;
-        private int p_br7 = 3;
+        private int p_br2 = 0;
+        private int p_br3 = 0;
+        private int p_br4 = 0;
+        private int p_br5 = 0;
+        private int p_br6 = 0;
+        private int p_br7 = 0;
 
-        private int r_br2 = 2;
-        private int r_br3 = 3;
-        private int r_br4 = 4;
-        private int r_br5 = 5;
-        private int r_br6 = 2;
-        private int r_br7 = 3;
+        private int r_br2 = 0;
+        private int r_br3 = 0;
+        private int r_br4 = 0;
+        private int r_br5 = 0;
+        private int r_br6 = 0;
+        private int r_br7 = 0;
 
 
         //TODO: make better ai
@@ -80,6 +85,7 @@ namespace Hyper_Ship_Battle
 
         private bool allowed;
         private bool turn;   // true - player fire / false - bot fire
+        private bool passturn = false;
 
         public Game()
         {
@@ -107,6 +113,12 @@ namespace Hyper_Ship_Battle
                         rect.Fill = new SolidColorBrush(Colors.DarkGray);
                     }
                     rect.Stroke = new SolidColorBrush(Colors.Gray);
+
+                    //for testing  + in app.xaml.cs App(){}
+                    if (col < 5 || col > 7)
+                    {
+                        rect.Fill = new SolidColorBrush(Colors.LightGray);
+                    }
 
                     // Add the rectangle to the grid
                     GameGrid.Children.Add(rect);
@@ -299,104 +311,260 @@ namespace Hyper_Ship_Battle
 
         private void BotTurn()
         {
-            while (true)
+        //Robot hit
+        again:
+            if (pastHit == 0)
             {
-                //Robot hit
                 Random rx = new Random();
                 Random ry = new Random();
                 x = rx.Next(10);
                 y = ry.Next(10);
+            }
+            else
+            {
+            new_direction:
+                if (direction == 0)
+                {
+                    Random rd = new Random();
+                    direction = rd.Next(1, 5);
+                }
+                if (pastHit == 2)
+                {
+                    switch (direction)
+                    {
+                        case 1: //left
+                            if (y == 1 || ((rectangles_r[x, y - 1].Fill as SolidColorBrush)?.Color != Colors.White && (rectangles_r[x, y - 1].Fill as SolidColorBrush)?.Color != Colors.DarkGray))
+                            {
+                                direction = 3;
+                                pastHit = 1;
+                                lastHitX = firstHitX;
+                                lastHitY = firstHitY;
+                            }
+                            break;
+                        case 2: //up
+                            if (x == 1 || ((rectangles_r[x - 1, y].Fill as SolidColorBrush)?.Color != Colors.White && (rectangles_r[x - 1, y].Fill as SolidColorBrush)?.Color != Colors.DarkGray))
+                            {
+                                direction = 4;
+                                pastHit = 1;
+                                lastHitX = firstHitX;
+                                lastHitY = firstHitY;
+                            }
+                            break;
+                        case 3: //right
+                            if (y == 9 || ((rectangles_r[x, y + 1].Fill as SolidColorBrush)?.Color != Colors.White && (rectangles_r[x, y + 1].Fill as SolidColorBrush)?.Color != Colors.DarkGray))
+                            {
+                                direction = 1;
+                                pastHit = 1;
+                                lastHitX = firstHitX;
+                                lastHitY = firstHitY;
+                            }
+                            break;
+                        case 4: //down
+                            if (x == 9 || ((rectangles_r[x + 1, y].Fill as SolidColorBrush)?.Color != Colors.White && (rectangles_r[x + 1, y].Fill as SolidColorBrush)?.Color != Colors.DarkGray))
+                            {
+                                direction = 2;
+                                pastHit = 1;
+                                lastHitX = firstHitX;
+                                lastHitY = firstHitY;
+                            }
+                            break;
+                    }
+                }
+                switch (direction)
+                {
+                    case 1: //left
+                        if (lastHitY - 1 > 0)
+                        {
+                            x = lastHitX;
+                            y = lastHitY - 1;
+                        }
+                        else
+                        {
+                            direction = 0;
+                            goto new_direction;
+                        }
+                        break;
+                    case 2: //up
+                        if (lastHitX - 1 > 0)
+                        {
+                            x = lastHitX - 1;
+                            y = lastHitY;
+                        }
+                        else
+                        {
+                            direction = 0;
+                            goto new_direction;
+                        }
+                        break;
+                    case 3: //right
+                        if (lastHitY + 1 < 10)
+                        {
+                            x = lastHitX;
+                            y = lastHitY + 1;
+                        }
+                        else
+                        {
+                            direction = 0;
+                            goto new_direction;
+                        }
+                        break;
+                    case 4: //down
+                        if (lastHitX + 1 < 10)
+                        {
+                            x = lastHitX + 1;
+                            y = lastHitY;
+                        }
+                        else
+                        {
+                            direction = 0;
+                            goto new_direction;
+                        }
+                        break;
+                }
+            }
 
-                Rectangle rect = rectangles_p[x, y];
-
-                if (BotShot())
-                    break;
-
+            Rectangle rect = rectangles_p[x, y];
+            if ((rect.Fill as SolidColorBrush)?.Color == Colors.White || (rect.Fill as SolidColorBrush)?.Color == Colors.DarkGray)
+            {
+                if (p_board[x, y] != 0)
+                {
+                    lastHitX = x;
+                    lastHitY = y;
+                    if (pastHit == 0)
+                    {
+                        firstHitX = x;
+                        firstHitY = y;
+                    }
+                    rect.Fill = new SolidColorBrush(Colors.Red);
+                    switch (p_board[x, y])
+                    {
+                        case 2:
+                            p_br2++;
+                            if (p_br2 < 2)
+                            {
+                                pastHit = 1;
+                            }
+                            else
+                            {
+                                pastHit = 0;
+                                direction = 0;
+                                sink(p_board[x, y], rectangles_p, App.p_board);
+                                shipsRemaining_p--;
+                            }
+                            break;
+                        case 3:
+                            p_br3++;
+                            if (p_br3 < 3)
+                            {
+                                if (p_br3 == 2)
+                                    pastHit = 2;
+                                else
+                                    pastHit = 1;
+                            }
+                            else
+                            {
+                                pastHit = 0;
+                                direction = 0;
+                                sink(p_board[x, y], rectangles_p, App.p_board);
+                                shipsRemaining_p--;
+                            }
+                            break;
+                        case 4:
+                            p_br4++;
+                            if (p_br4 < 4)
+                            {
+                                if (p_br4 > 1)
+                                    pastHit = 2;
+                                else
+                                    pastHit = 1;
+                            }
+                            else
+                            {
+                                pastHit = 0;
+                                direction = 0;
+                                sink(p_board[x, y], rectangles_p, App.p_board);
+                                shipsRemaining_p--;
+                            }
+                            break;
+                        case 5:
+                            p_br5++;
+                            if (p_br5 < 5)
+                            {
+                                if (p_br5 > 1)
+                                    pastHit = 2;
+                                else
+                                    pastHit = 1;
+                            }
+                            else
+                            {
+                                pastHit = 0;
+                                direction = 0;
+                                sink(p_board[x, y], rectangles_p, App.p_board);
+                                shipsRemaining_p--;
+                            }
+                            break;
+                        case 6:
+                            p_br6++;
+                            if (p_br6 < 2)
+                            {
+                                pastHit = 1;
+                            }
+                            else
+                            {
+                                pastHit = 0;
+                                direction = 0;
+                                sink(p_board[x, y], rectangles_p, App.p_board);
+                                shipsRemaining_p--;
+                            }
+                            break;
+                        case 7:
+                            p_br7++;
+                            if (p_br7 < 3)
+                            {
+                                if (p_br7 == 2)
+                                    pastHit = 2;
+                                else
+                                    pastHit = 1;
+                            }
+                            else
+                            {
+                                pastHit = 0;
+                                direction = 0;
+                                sink(p_board[x, y], rectangles_p, App.p_board);
+                                shipsRemaining_p--;
+                            }
+                            break;
+                    }
+                    passturn = false;
+                }
+                else
+                {
+                    rect.Fill = new SolidColorBrush(Colors.LightGray);
+                    if (pastHit == 2)
+                    {
+                        if (direction == 1)
+                            direction = 3;
+                        else if (direction == 2)
+                            direction = 4;
+                        else if (direction == 3)
+                            direction = 1;
+                        else if (direction == 4)
+                            direction = 2;
+                        lastHitX = firstHitX;
+                        lastHitY = firstHitY;
+                        pastHit = 1;
+                    }
+                    else
+                        direction = 0;
+                    passturn = true;
+                }
+            }
+            else
+            {
+                direction = 0;
+                goto again;
             }
             continue_f();
-            return;
-        }
-
-        private bool BotShot()
-        {
-            Rectangle rect = rectangles_p[x, y];
-            if ((rect.Fill as SolidColorBrush)?.Color != Colors.White)
-                return false;
-            switch (p_board[x, y])
-            {
-                case 0:
-                    pastHit = false;
-                    rect.Fill = new SolidColorBrush(Colors.LightGray);
-                    break;
-
-                case 2:
-                    rect.Fill = new SolidColorBrush(Colors.Red);
-                    p_br2--;
-                    if (p_br2 == 0)
-                    {
-                        sink(2, rectangles_p, App.p_board);
-                        break;
-                    }
-                    pastHit = true;
-                    break;
-                case 3:
-
-                    rect.Fill = new SolidColorBrush(Colors.Red);
-                    p_br3--;
-                    if (p_br3 == 0)
-                    {
-                        sink(3, rectangles_p, App.p_board);
-                        break;
-                    }
-                    pastHit = true;
-                    break;
-                case 4:
-
-                    rect.Fill = new SolidColorBrush(Colors.Red);
-                    p_br4--;
-                    if (p_br4 == 0)
-                    {
-                        sink(4, rectangles_p, App.p_board);
-                        break;
-                    }
-                    pastHit = true;
-                    break;
-                case 5:
-
-                    rect.Fill = new SolidColorBrush(Colors.Red);
-                    p_br5--;
-                    if (p_br5 == 0)
-                    {
-                        sink(5, rectangles_p, App.p_board);
-                        pastHit = false;
-                        break;
-                    }
-                    pastHit = true;
-                    break;
-                case 6:
-                    rect.Fill = new SolidColorBrush(Colors.Red);
-                    p_br6--;
-                    if (p_br6 == 0)
-                    {
-                        sink(6, rectangles_p, App.p_board);
-                        pastHit = false;
-                        break;
-                    }
-                    pastHit = true;
-                    break;
-                case 7:
-                    rect.Fill = new SolidColorBrush(Colors.Red);
-                    p_br7--;
-                    if (p_br7 == 0)
-                    {
-                        sink(7, rectangles_p, App.p_board);
-                        pastHit = false;
-                        break;
-                    }
-                    pastHit = true;
-                    break;
-            }
-            return true;
         }
 
         private async void continue_f()
@@ -408,16 +576,17 @@ namespace Hyper_Ship_Battle
                 await Task.Delay(1000);
                 BotTurn();
             }
-            else if (!turn && pastHit)
-            {
-                await Task.Delay(1000);
-                BotTurn();
-            }
-            else if (!turn && !pastHit)
+            else if (!turn && passturn)
             {
                 await Task.Delay(1000);
                 turn_sw();
                 allowed = true;
+                passturn = false;
+            }
+            else if (!turn && !passturn)
+            {
+                await Task.Delay(1000);
+                BotTurn();
             }
         }
     }
