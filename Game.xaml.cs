@@ -115,7 +115,7 @@ namespace Hyper_Ship_Battle
                     rect.Stroke = new SolidColorBrush(Colors.Gray);
 
                     //for testing  + in app.xaml.cs App(){}
-                    if (col < 5 || col > 7)
+                    if (col < 5 || col > 7 || row < 3)
                     {
                         rect.Fill = new SolidColorBrush(Colors.LightGray);
                     }
@@ -129,7 +129,10 @@ namespace Hyper_Ship_Battle
                     rectangles_p[row, col] = rect;
                     rect.Visibility = Visibility.Collapsed;
                 }
-            };
+            }
+            //testing
+            rectangles_p[3, 6].Fill = new SolidColorBrush(Colors.LightGray);
+            rectangles_p[9, 6].Fill = new SolidColorBrush(Colors.LightGray);
         }
 
         private void InitializeGrid_r()
@@ -333,7 +336,7 @@ namespace Hyper_Ship_Battle
                     switch (direction)
                     {
                         case 1: //left
-                            if (y == 1 || ((rectangles_r[x, y - 1].Fill as SolidColorBrush)?.Color != Colors.White && (rectangles_r[x, y - 1].Fill as SolidColorBrush)?.Color != Colors.DarkGray))
+                            if (y == 0 || !((rectangles_p[x, y - 1].Fill as SolidColorBrush)?.Color == Colors.White || (rectangles_p[x, y - 1].Fill as SolidColorBrush)?.Color == Colors.DarkGray))
                             {
                                 direction = 3;
                                 pastHit = 1;
@@ -342,7 +345,7 @@ namespace Hyper_Ship_Battle
                             }
                             break;
                         case 2: //up
-                            if (x == 1 || ((rectangles_r[x - 1, y].Fill as SolidColorBrush)?.Color != Colors.White && (rectangles_r[x - 1, y].Fill as SolidColorBrush)?.Color != Colors.DarkGray))
+                            if (x == 0 || !((rectangles_p[x - 1, y].Fill as SolidColorBrush)?.Color == Colors.White || (rectangles_p[x - 1, y].Fill as SolidColorBrush)?.Color == Colors.DarkGray))
                             {
                                 direction = 4;
                                 pastHit = 1;
@@ -351,7 +354,7 @@ namespace Hyper_Ship_Battle
                             }
                             break;
                         case 3: //right
-                            if (y == 9 || ((rectangles_r[x, y + 1].Fill as SolidColorBrush)?.Color != Colors.White && (rectangles_r[x, y + 1].Fill as SolidColorBrush)?.Color != Colors.DarkGray))
+                            if (y == 9 || !((rectangles_p[x, y + 1].Fill as SolidColorBrush)?.Color == Colors.White || (rectangles_p[x, y + 1].Fill as SolidColorBrush)?.Color == Colors.DarkGray))
                             {
                                 direction = 1;
                                 pastHit = 1;
@@ -359,8 +362,8 @@ namespace Hyper_Ship_Battle
                                 lastHitY = firstHitY;
                             }
                             break;
-                        case 4: //down
-                            if (x == 9 || ((rectangles_r[x + 1, y].Fill as SolidColorBrush)?.Color != Colors.White && (rectangles_r[x + 1, y].Fill as SolidColorBrush)?.Color != Colors.DarkGray))
+                        case 4: //down !!!not going through when needed
+                            if (x == 9 || !((rectangles_p[x + 1, y].Fill as SolidColorBrush)?.Color == Colors.White || (rectangles_p[x + 1, y].Fill as SolidColorBrush)?.Color == Colors.DarkGray))
                             {
                                 direction = 2;
                                 pastHit = 1;
@@ -373,7 +376,7 @@ namespace Hyper_Ship_Battle
                 switch (direction)
                 {
                     case 1: //left
-                        if (lastHitY - 1 > 0)
+                        if (lastHitY > 0)
                         {
                             x = lastHitX;
                             y = lastHitY - 1;
@@ -385,7 +388,7 @@ namespace Hyper_Ship_Battle
                         }
                         break;
                     case 2: //up
-                        if (lastHitX - 1 > 0)
+                        if (lastHitX > 0)
                         {
                             x = lastHitX - 1;
                             y = lastHitY;
@@ -397,7 +400,7 @@ namespace Hyper_Ship_Battle
                         }
                         break;
                     case 3: //right
-                        if (lastHitY + 1 < 10)
+                        if (lastHitY < 9)
                         {
                             x = lastHitX;
                             y = lastHitY + 1;
@@ -409,7 +412,7 @@ namespace Hyper_Ship_Battle
                         }
                         break;
                     case 4: //down
-                        if (lastHitX + 1 < 10)
+                        if (lastHitX < 9)
                         {
                             x = lastHitX + 1;
                             y = lastHitY;

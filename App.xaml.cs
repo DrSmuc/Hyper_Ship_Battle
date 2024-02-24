@@ -47,10 +47,11 @@ namespace Hyper_Ship_Battle
                     p_board[i, j] = 0;
                 }
             }
-            p_board[4, 6] = 4;
-            p_board[5, 6] = 4;
-            p_board[6, 6] = 4;
-            p_board[7, 6] = 4;
+            p_board[4, 6] = 5;
+            p_board[5, 6] = 5;
+            p_board[6, 6] = 5;
+            p_board[7, 6] = 5;
+            p_board[8, 6] = 5;
         }
 
 
