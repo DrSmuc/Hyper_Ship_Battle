@@ -18,6 +18,9 @@ namespace Hyper_Ship_Battle
         private int shipsOfLength3Placed = 0;
         private int shipsOfLength4Placed = 0;
 
+        private bool b6 = false;
+        private bool b7 = false;
+
         public Setup()
         {
             this.InitializeComponent();
@@ -201,11 +204,32 @@ namespace Hyper_Ship_Battle
         private void PlaceShip(int row, int column, bool horizontal)
         {
             int requiredLength = shipLength;
+            int putlenght = shipLength;
+            if (shipLength == 2 && !b6)
+            {
+                b6 = true;
+            }
+            else if (shipLength == 2 && b6)
+            {
+                putlenght = 6;
+                b6 = false;
+            }
+            else if (shipLength == 3 && !b7)
+            {
+                b7 = true;
+            }
+            else if (shipLength == 3 && b7)
+            {
+                putlenght = 7;
+                b7 = false;
+            }
 
             if (horizontal)
             {
                 for (int i = column; i < column + requiredLength; i++)
                 {
+                    App.p_board[row, i] = putlenght;
+                    
                     gridButtons[row, i].Background = new SolidColorBrush(Colors.Blue);
                     gridButtons[row, i].Tag = "Brod";
                 }
@@ -214,6 +238,7 @@ namespace Hyper_Ship_Battle
             {
                 for (int i = row; i < row + requiredLength; i++)
                 {
+                    App.p_board[i, column] = putlenght;
                     gridButtons[i, column].Background = new SolidColorBrush(Colors.Blue);
                     gridButtons[i, column].Tag = "Brod";
                 }
@@ -226,6 +251,15 @@ namespace Hyper_Ship_Battle
         {
             var dialog = new Windows.UI.Popups.MessageDialog(message);
             await dialog.ShowAsync();
+        }
+
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
+        }
+        private void MenuFlyoutItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Game));
         }
     }
 }

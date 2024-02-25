@@ -68,11 +68,8 @@ namespace Hyper_Ship_Battle
         private int r_br7 = 0;
 
 
-        //TODO: make better ai
-
-
-        private const int NumberOfShips_p = 1;
-        private const int NumberOfShips_r = 1;
+        private const int NumberOfShips_p = 5;
+        private const int NumberOfShips_r = 5;
 
         private Rectangle[,] rectangles_p = new Rectangle[GridSize, GridSize];
         private Rectangle[,] rectangles_r = new Rectangle[GridSize, GridSize];
@@ -101,11 +98,11 @@ namespace Hyper_Ship_Battle
         private void InitializeGrid_p()
         {
             //testing
-            App.p_board[4, 6] = 5;
+            /*App.p_board[4, 6] = 5;
             App.p_board[5, 6] = 5;
             App.p_board[6, 6] = 5;
             App.p_board[7, 6] = 5;
-            App.p_board[8, 6] = 5;
+            App.p_board[8, 6] = 5;*/
 
             // Loop through each cell in the grid
             for (int row = 0; row < GridSize; row++)
@@ -124,10 +121,10 @@ namespace Hyper_Ship_Battle
                     rect.Stroke = new SolidColorBrush(Colors.Gray);
 
                     //for testing
-                    if (col < 5 || col > 7 || row < 3)
+                    /*if (col < 5 || col > 7 || row < 3)
                     {
                         rect.Fill = new SolidColorBrush(Colors.LightGray);
-                    }
+                    }*/
 
                     // Add the rectangle to the grid
                     GameGrid.Children.Add(rect);
@@ -140,8 +137,8 @@ namespace Hyper_Ship_Battle
                 }
             }
             //testing
-            rectangles_p[3, 6].Fill = new SolidColorBrush(Colors.LightGray);
-            rectangles_p[9, 6].Fill = new SolidColorBrush(Colors.LightGray);
+            /*rectangles_p[3, 6].Fill = new SolidColorBrush(Colors.LightGray);
+            rectangles_p[9, 6].Fill = new SolidColorBrush(Colors.LightGray);*/
         }
         private void InitializeGrid_r()
         {

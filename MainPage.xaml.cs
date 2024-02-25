@@ -33,7 +33,7 @@ namespace Hyper_Ship_Battle
         }
         private void MenuFlyoutItem_Click_2(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Game));
+            Frame.Navigate(typeof(Setup));
         }
     }
 }
