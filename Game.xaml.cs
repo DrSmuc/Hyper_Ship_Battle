@@ -86,6 +86,7 @@ namespace Hyper_Ship_Battle
         private bool allowed;
         private bool turn;   // true - player fire / false - bot fire
         private bool passturn = false;
+        private int endgame = 0;
 
         public Game()
         {
@@ -94,10 +95,18 @@ namespace Hyper_Ship_Battle
             InitializeGrid_r();
             allowed = true;
             turn = true;
+            hideEnd();
         }
 
         private void InitializeGrid_p()
         {
+            //testing
+            App.p_board[4, 6] = 5;
+            App.p_board[5, 6] = 5;
+            App.p_board[6, 6] = 5;
+            App.p_board[7, 6] = 5;
+            App.p_board[8, 6] = 5;
+
             // Loop through each cell in the grid
             for (int row = 0; row < GridSize; row++)
             {
@@ -114,7 +123,7 @@ namespace Hyper_Ship_Battle
                     }
                     rect.Stroke = new SolidColorBrush(Colors.Gray);
 
-                    //for testing  + in app.xaml.cs App(){}
+                    //for testing
                     if (col < 5 || col > 7 || row < 3)
                     {
                         rect.Fill = new SolidColorBrush(Colors.LightGray);
@@ -134,7 +143,6 @@ namespace Hyper_Ship_Battle
             rectangles_p[3, 6].Fill = new SolidColorBrush(Colors.LightGray);
             rectangles_p[9, 6].Fill = new SolidColorBrush(Colors.LightGray);
         }
-
         private void InitializeGrid_r()
         {
             // Loop through each cell in the grid
@@ -280,37 +288,17 @@ namespace Hyper_Ship_Battle
                     }
                 }
             }
-            if (shipsRemaining_p == 0)
-            {
-                //loss
-            }
             if (shipsRemaining_r == 0)
             {
                 //win
+                endgame = 1;
             }
-        }
-
-        private void turn_sw()
-        {
-            for (int row = 0; row < GridSize; row++)
+            if (shipsRemaining_p == 0)
             {
-                for (int col = 0; col < GridSize; col++)
-                {
-                    if (turn)
-                    {
-                        rectangles_r[row, col].Visibility = Visibility.Collapsed;
-                        rectangles_p[row, col].Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        rectangles_p[row, col].Visibility = Visibility.Collapsed;
-                        rectangles_r[row, col].Visibility = Visibility.Visible;
-                    }
-                }
+                //loss
+                endgame = -1;
             }
-            turn = !turn;
         }
-
 
         private void BotTurn()
         {
@@ -451,8 +439,8 @@ namespace Hyper_Ship_Battle
                             {
                                 pastHit = 0;
                                 direction = 0;
-                                sink(p_board[x, y], rectangles_p, App.p_board);
                                 shipsRemaining_p--;
+                                sink(p_board[x, y], rectangles_p, App.p_board);
                             }
                             break;
                         case 3:
@@ -468,8 +456,8 @@ namespace Hyper_Ship_Battle
                             {
                                 pastHit = 0;
                                 direction = 0;
-                                sink(p_board[x, y], rectangles_p, App.p_board);
                                 shipsRemaining_p--;
+                                sink(p_board[x, y], rectangles_p, App.p_board);
                             }
                             break;
                         case 4:
@@ -485,8 +473,8 @@ namespace Hyper_Ship_Battle
                             {
                                 pastHit = 0;
                                 direction = 0;
-                                sink(p_board[x, y], rectangles_p, App.p_board);
                                 shipsRemaining_p--;
+                                sink(p_board[x, y], rectangles_p, App.p_board);
                             }
                             break;
                         case 5:
@@ -502,8 +490,8 @@ namespace Hyper_Ship_Battle
                             {
                                 pastHit = 0;
                                 direction = 0;
-                                sink(p_board[x, y], rectangles_p, App.p_board);
                                 shipsRemaining_p--;
+                                sink(p_board[x, y], rectangles_p, App.p_board);
                             }
                             break;
                         case 6:
@@ -516,8 +504,8 @@ namespace Hyper_Ship_Battle
                             {
                                 pastHit = 0;
                                 direction = 0;
-                                sink(p_board[x, y], rectangles_p, App.p_board);
                                 shipsRemaining_p--;
+                                sink(p_board[x, y], rectangles_p, App.p_board);
                             }
                             break;
                         case 7:
@@ -533,8 +521,8 @@ namespace Hyper_Ship_Battle
                             {
                                 pastHit = 0;
                                 direction = 0;
-                                sink(p_board[x, y], rectangles_p, App.p_board);
                                 shipsRemaining_p--;
+                                sink(p_board[x, y], rectangles_p, App.p_board);
                             }
                             break;
                     }
@@ -570,27 +558,101 @@ namespace Hyper_Ship_Battle
             continue_f();
         }
 
+        private void turn_sw()
+        {
+            for (int row = 0; row < GridSize; row++)
+            {
+                for (int col = 0; col < GridSize; col++)
+                {
+                    if (turn)
+                    {
+                        rectangles_r[row, col].Visibility = Visibility.Collapsed;
+                        rectangles_p[row, col].Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        rectangles_p[row, col].Visibility = Visibility.Collapsed;
+                        rectangles_r[row, col].Visibility = Visibility.Visible;
+                    }
+                }
+            }
+            turn = !turn;
+        }
+
         private async void continue_f()
         {
-            if (!allowed && turn)
+            if (!allowed && turn && endgame == 0)
             {
                 await Task.Delay(1000);
                 turn_sw();
                 await Task.Delay(1000);
                 BotTurn();
             }
-            else if (!turn && passturn)
+            else if (!turn && passturn && endgame == 0)
             {
                 await Task.Delay(1000);
                 turn_sw();
                 allowed = true;
                 passturn = false;
             }
-            else if (!turn && !passturn)
+            else if (!turn && !passturn && endgame == 0)
             {
                 await Task.Delay(1000);
                 BotTurn();
             }
+            else if (endgame == 1)
+            {
+                await Task.Delay(1000);
+                win();
+            }
+            else if (endgame == -1)
+            {
+                await Task.Delay(1000);
+                loss();
+            }
+        }
+
+        private void hideEnd()
+        {
+            endstatus.Visibility = Visibility.Collapsed;
+            rematch_b.Visibility = Visibility.Collapsed;
+            home_b.Visibility = Visibility.Collapsed;
+            myCanvas.Visibility = Visibility.Collapsed;
+            myCanvas.Visibility = Visibility.Collapsed;
+            myCanvas.Opacity = 0;
+        }
+        private void win()
+        {
+            endstatus.Text = "Mission passed";
+            endstatus.Visibility = Visibility.Visible;
+            rematch_b.Visibility = Visibility.Visible;
+            home_b.Visibility = Visibility.Visible;
+            myCanvas.Visibility = Visibility.Visible;
+            myCanvas.Background = new SolidColorBrush(Colors.DarkGray);
+            myCanvas.Background.Opacity = 90;
+            myCanvas.Opacity = 5;
+        }
+        private void loss()
+        {
+            endstatus.Text = "Mission failled";
+            endstatus.Visibility = Visibility.Visible;
+            rematch_b.Visibility = Visibility.Visible;
+            home_b.Visibility = Visibility.Visible;
+            myCanvas.Visibility = Visibility.Visible;
+            myCanvas.Background = new SolidColorBrush(Colors.DarkGray);
+            myCanvas.Background.Opacity = 90;
+            myCanvas.Opacity = 5;
+        }
+
+        private void rematch_b_Click(object sender, RoutedEventArgs e)
+        {
+            hideEnd();
+            Frame.Navigate(typeof(MainPage));   //treba na setup
+        }
+        private void home_b_Click(object sender, RoutedEventArgs e)
+        {
+            hideEnd();
+            Frame.Navigate(typeof(MainPage));
         }
     }
 }

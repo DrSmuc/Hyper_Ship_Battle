@@ -10,10 +10,7 @@
 
     <Grid Background="Gray">
 
-
-        <TextBlock x:Name="StatusText" Grid.Row="0" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top" MaxLines="1" Text="loremloremlorem" Margin="0,176,0,0"/>
-
-        <Grid x:Name="GameGrid" Grid.Row="1" Margin="10" Background="Gray" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid x:Name="GameGrid" Margin="10" Background="Gray" HorizontalAlignment="Center" VerticalAlignment="Center">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
@@ -41,5 +38,13 @@
             </Grid.RowDefinitions>
 
         </Grid>
+
+        <TextBlock x:Name="endstatus" HorizontalAlignment="Center" TextWrapping="Wrap" Text="lorem lorem" VerticalAlignment="Center" Margin="0,0,0,150" TextAlignment="Center" FontSize="72" FontFamily="BankGothic Lt BT" FontWeight="Bold" FontStyle="Italic" Canvas.ZIndex="10"/>
+        <Button x:Name="rematch_b" Content="Rematch" VerticalAlignment="Center" Height="70" Width="160" HorizontalAlignment="Center" Margin="0,50,185,0" Click="rematch_b_Click" Background="#FF00B5FF" FontSize="24" FontFamily="BankGothic Lt BT" CornerRadius="15" FontWeight="Bold" Canvas.ZIndex="10" Foreground="White" FocusVisualSecondaryBrush="#99000000" FocusVisualPrimaryBrush="White"/>
+        <Button x:Name="home_b" Content="Home" VerticalAlignment="Center" Height="70" Width="160" HorizontalAlignment="Center" Margin="185,50,0,0" Click="home_b_Click" Background="#FF00B5FF" FontSize="24" FontFamily="BankGothic Lt BT" CornerRadius="15" FontWeight="Bold" Canvas.ZIndex="10" FocusVisualPrimaryBrush="White" FocusVisualSecondaryBrush="#99000000" BorderBrush="Transparent"/>
+        <Canvas x:Name="myCanvas" Canvas.ZIndex="8" Background="#190C0C0C" Opacity="0.05"/>
+
     </Grid>
+    
 </Page>
+    
