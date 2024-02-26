@@ -31,7 +31,8 @@ namespace Hyper_Ship_Battle
         {
             Application.Current.Exit();
         }
-        private void MenuFlyoutItem_Click_2(object sender, RoutedEventArgs e)
+
+        private void PlayB_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Setup));
         }

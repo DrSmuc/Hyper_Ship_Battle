@@ -14,6 +14,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI;
+using System.Data.Common;
 
 namespace Hyper_Ship_Battle
 {
@@ -30,6 +32,40 @@ namespace Hyper_Ship_Battle
         public static int[,] p_board = new int[10, 10];
         public static int[,] r_board = new int[10, 10];
 
+        public static Color emptyColor = Colors.White;
+        public static Color missColor = Colors.LightGray;
+        public static Color shipColor = Colors.DarkGray;
+        public static Color strokeColor = Colors.Gray;
+
+        /*private static string emptyColorHex = "#FF0000";
+        public static Color emptyColor = Color.FromArgb(
+            byte.Parse(emptyColorHex.Substring(1, 2), System.Globalization.NumberStyles.HexNumber),
+            byte.Parse(emptyColorHex.Substring(3, 2), System.Globalization.NumberStyles.HexNumber),
+            byte.Parse(emptyColorHex.Substring(5, 2), System.Globalization.NumberStyles.HexNumber),
+            byte.Parse(emptyColorHex.Substring(7, 2), System.Globalization.NumberStyles.HexNumber));
+
+        private static string shipColorHex = "#FF0000";
+        public static Color shipColor = Color.FromArgb(
+            byte.Parse(shipColorHex.Substring(1, 2), System.Globalization.NumberStyles.HexNumber),
+            byte.Parse(shipColorHex.Substring(3, 2), System.Globalization.NumberStyles.HexNumber),
+            byte.Parse(shipColorHex.Substring(5, 2), System.Globalization.NumberStyles.HexNumber),
+            byte.Parse(shipColorHex.Substring(7, 2), System.Globalization.NumberStyles.HexNumber));
+
+        private static string missColorHex = "#FF0000";
+        public static Color missColor = Color.FromArgb(
+            byte.Parse(missColorHex.Substring(1, 2), System.Globalization.NumberStyles.HexNumber),
+            byte.Parse(missColorHex.Substring(3, 2), System.Globalization.NumberStyles.HexNumber),
+            byte.Parse(missColorHex.Substring(5, 2), System.Globalization.NumberStyles.HexNumber),
+            byte.Parse(missColorHex.Substring(7, 2), System.Globalization.NumberStyles.HexNumber));
+        
+        private static string strokeColorHex = "#FF0000";
+        public static Color strokeColor = Color.FromArgb(
+            byte.Parse(strokeColorHex.Substring(1, 2), System.Globalization.NumberStyles.HexNumber),
+            byte.Parse(strokeColorHex.Substring(3, 2), System.Globalization.NumberStyles.HexNumber),
+            byte.Parse(strokeColorHex.Substring(5, 2), System.Globalization.NumberStyles.HexNumber),
+            byte.Parse(strokeColorHex.Substring(7, 2), System.Globalization.NumberStyles.HexNumber));
+        */
+
         public App()
         {
             this.InitializeComponent();
@@ -44,11 +80,17 @@ namespace Hyper_Ship_Battle
                 for (int j = 0; j < 10; j++)
                 {
                     p_board[i, j] = 0;
-                    p_board[i, j] = 0;
+                    r_board[i, j] = 0;
                 }
             }
         }
 
+        public static void r_board0()
+        {
+            for (int i = 0; i < 10; i++)
+                for (int j = 0; j < 10; j++)
+                    r_board[i, j] = 0;
+        }
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points

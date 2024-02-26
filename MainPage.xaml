@@ -7,15 +7,25 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <Color x:Key="GradientStopColor1">#FF00B5FF</Color>
+    </Page.Resources>
 
     <Grid>
-        <MenuBar HorizontalAlignment="Left" VerticalAlignment="Top">
-            <MenuBarItem Title="File">
-                <MenuFlyoutItem Text="Game" Click="MenuFlyoutItem_Click_2"/>
-                <MenuFlyoutItem Text="Exit" Click="MenuFlyoutItem_Click"/>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF000128" Offset="0.934"/>
+                <GradientStop Color="#FF00A3FF" Offset="0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <MenuBar VerticalAlignment="Top" HorizontalAlignment="Right">
+            <MenuBarItem Title="Exit" HorizontalAlignment="Right">
+                <MenuFlyoutItem Text="Exit" Click="MenuFlyoutItem_Click" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
             </MenuBarItem>
         </MenuBar>
 
-        <TextBlock HorizontalAlignment="Center" Margin="0,249,0,0" TextWrapping="Wrap" Text="Dobrodošli" VerticalAlignment="Top"/>
+        <TextBlock x:Name="HelloText" HorizontalAlignment="Center" Text="HYPER SHIP BATTLE" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Ravie" FontSize="72" FontWeight="Bold" FontStyle="Italic" TextDecorations="None" Margin="0,0,0,150" TextWrapping="WrapWholeWords"/>
+        <Button x:Name="PlayB" Content="Play" HorizontalAlignment="Center" Height="115" Width="306" FontFamily="Ravie" FontSize="72" Click="PlayB_Click" Margin="0,150,0,0" CornerRadius="15"/>
+        <Button x:Name="ExitB" Content="Quit" HorizontalAlignment="Center" Height="115" Width="306" FontFamily="Ravie" FontSize="72" Click="PlayB_Click" Margin="0,475,0,0" CornerRadius="15"/>
     </Grid>
 </Page>

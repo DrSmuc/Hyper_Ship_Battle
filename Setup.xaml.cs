@@ -3,6 +3,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI;
 using System;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Navigation;
 
 namespace Hyper_Ship_Battle
 {
@@ -41,6 +42,7 @@ namespace Hyper_Ship_Battle
                     button.Width = 50;
                     button.Height = 50;
                     button.Margin = new Thickness(1);
+                    button.Background = new SolidColorBrush(Colors.White);
                     Grid.SetRow(button, i);
                     Grid.SetColumn(button, j);
                     GameGrid.Children.Add(button);

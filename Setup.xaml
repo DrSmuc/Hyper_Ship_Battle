@@ -8,14 +8,20 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF000128" Offset="0.934"/>
+                <GradientStop Color="#FF00A3FF" Offset="0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <MenuBar HorizontalAlignment="Left" VerticalAlignment="Top">
             <MenuBarItem Title="File">
                 <MenuFlyoutItem Text="Game" Click="MenuFlyoutItem_Click_2"/>
                 <MenuFlyoutItem Text="Exit" Click="MenuFlyoutItem_Click"/>
             </MenuBarItem>
         </MenuBar>
-        
-    <Grid x:Name="GameGrid" Grid.Row="1" Margin="10" Background="Gray" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <Grid x:Name="GameGrid" Grid.Row="1" Margin="10" Background="#FF00A3FF" HorizontalAlignment="Center" VerticalAlignment="Center">
         
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
