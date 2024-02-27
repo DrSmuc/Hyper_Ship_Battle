@@ -31,11 +31,15 @@ namespace Hyper_Ship_Battle
 
         public static int[,] p_board = new int[10, 10];
         public static int[,] r_board = new int[10, 10];
+        public static bool resetSetup = false;
+        public static bool readySetup = false;
 
-        public static Color emptyColor = Colors.White;
-        public static Color missColor = Colors.LightGray;
+        public static Color emptyColor = Colors.DeepSkyBlue;
+        public static Color missColor = Colors.LightSkyBlue;
         public static Color shipColor = Colors.DarkGray;
         public static Color strokeColor = Colors.Gray;
+        public static Color hitColor = Colors.Red;
+        public static Color sinkColor = Colors.DarkRed;
 
         /*private static string emptyColorHex = "#FF0000";
         public static Color emptyColor = Color.FromArgb(
@@ -86,6 +90,13 @@ namespace Hyper_Ship_Battle
         }
 
         public static void r_board0()
+        {
+            for (int i = 0; i < 10; i++)
+                for (int j = 0; j < 10; j++)
+                    r_board[i, j] = 0;
+        }
+
+        public static void p_board0()
         {
             for (int i = 0; i < 10; i++)
                 for (int j = 0; j < 10; j++)

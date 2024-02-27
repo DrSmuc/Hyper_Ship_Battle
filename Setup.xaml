@@ -14,40 +14,41 @@
                 <GradientStop Color="#FF00A3FF" Offset="0"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <MenuBar HorizontalAlignment="Left" VerticalAlignment="Top">
-            <MenuBarItem Title="File">
-                <MenuFlyoutItem Text="Game" Click="MenuFlyoutItem_Click_2"/>
-                <MenuFlyoutItem Text="Exit" Click="MenuFlyoutItem_Click"/>
-            </MenuBarItem>
-        </MenuBar>
 
-        <Grid x:Name="GameGrid" Grid.Row="1" Margin="10" Background="#FF00A3FF" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid x:Name="GameGrid" Grid.Row="1" Margin="10" Background="Gray" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                                <!-- ="#FF00A3FF" -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+        </Grid>
         
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="50"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-        </Grid.RowDefinitions>
-
-    </Grid>
+        <Button x:Name="savepreset_b" Content="Save preset" Margin="0,0,750,175" VerticalAlignment="Center" Height="58" Width="180" FontSize="24" Click="savepreset_b_Click" HorizontalAlignment="Center"/>
+        <Button x:Name="loadpreset_b" Content="Load preset" VerticalAlignment="Center" Height="58" Width="180" FontSize="24" Click="loadpreset_b_Click" Margin="0,0,750,0" HorizontalAlignment="Center"/>
+        <Button x:Name="continue_b" Content="Continue" Margin="0,175,750,0" VerticalAlignment="Center" Height="58" Width="180" FontSize="24" Click="continue_Click" HorizontalAlignment="Center"/>
+        <Button x:Name="clear_b" Content="Clear" Margin="0,350,750,0" VerticalAlignment="Center" Height="58" Width="180" FontSize="24" Click="clear_b_Click" HorizontalAlignment="Center"/>
+    
+    
     </Grid>
 </Page>

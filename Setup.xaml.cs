@@ -22,15 +22,66 @@ namespace Hyper_Ship_Battle
         private bool b6 = false;
         private bool b7 = false;
 
+        private bool ready = false;
+
         public Setup()
         {
             this.InitializeComponent();
             InitializeGrid();
+            ready = false;
+            continue_b.Opacity = 60;
+            savepreset_b.Opacity = 60;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (App.resetSetup)
+            {
+                openned();
+                App.resetSetup = false;
+            }
+            else if (App.readySetup)
+            {
+                ready_f();
+            }
+        }
+
+        private void openned()
+        {
+            InitializeGrid();
+            ready = false;
+            continue_b.Opacity = 60;
+            savepreset_b.Opacity = 60;
+            numberOfShipsPlaced = 0;
+            shipsOfLength2Placed = 0;
+            shipsOfLength3Placed = 0;
+            shipsOfLength4Placed = 0;
+            b6 = false;
+            b7 = false;
+            ready = false;
+            placingShip = false;
+        }
+
+        private void DeleteAllChildren(Panel parentPanel)
+        {
+            parentPanel.Children.Clear();
         }
 
         // grid s gumbom
         private void InitializeGrid()
         {
+            if (ready)
+            {
+                for (int i = 0; i < Rows; i++)
+                {
+                    for (int j = 0; j < Columns; j++)
+                    {
+                        DeleteAllChildren(GameGrid);
+                    }
+                }
+            }
+
             gridButtons = new Button[Rows, Columns];
             for (int i = 0; i < Rows; i++)
             {
@@ -42,8 +93,13 @@ namespace Hyper_Ship_Battle
                     button.Width = 50;
                     button.Height = 50;
                     button.Margin = new Thickness(1);
-                    button.Background = new SolidColorBrush(Colors.White);
-                    Grid.SetRow(button, i);
+
+                    if (App.p_board[i, j]==0)
+                        button.Background = new SolidColorBrush(App.emptyColor);
+                    else
+                        button.Background = new SolidColorBrush(App.shipColor);
+
+                        Grid.SetRow(button, i);
                     Grid.SetColumn(button, j);
                     GameGrid.Children.Add(button);
                     gridButtons[i, j] = button;
@@ -166,8 +222,21 @@ namespace Hyper_Ship_Battle
                     ShowMessage("Nemoguće postaviti više brodova!");
                 }
             }
+
+            if (numberOfShipsPlaced==5)
+            {
+                ready_f();
+            }
         }
 
+        private void ready_f()
+        {
+            continue_b.Opacity = 100;
+            savepreset_b.Opacity = 100;
+            numberOfShipsPlaced = 5;
+            ready = true;
+            App.readySetup = false;
+        }
 
 
         //provjera
@@ -232,7 +301,7 @@ namespace Hyper_Ship_Battle
                 {
                     App.p_board[row, i] = putlenght;
                     
-                    gridButtons[row, i].Background = new SolidColorBrush(Colors.Blue);
+                    gridButtons[row, i].Background = new SolidColorBrush(App.shipColor);
                     gridButtons[row, i].Tag = "Brod";
                 }
             }
@@ -241,7 +310,7 @@ namespace Hyper_Ship_Battle
                 for (int i = row; i < row + requiredLength; i++)
                 {
                     App.p_board[i, column] = putlenght;
-                    gridButtons[i, column].Background = new SolidColorBrush(Colors.Blue);
+                    gridButtons[i, column].Background = new SolidColorBrush(App.shipColor);
                     gridButtons[i, column].Tag = "Brod";
                 }
             }
@@ -262,6 +331,40 @@ namespace Hyper_Ship_Battle
         private void MenuFlyoutItem_Click_2(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Game));
+        }
+
+        private void savepreset_b_Click(object sender, RoutedEventArgs e)
+        {
+            if (ready)
+            {
+                //save
+            }
+        }
+
+        private void loadpreset_b_Click(object sender, RoutedEventArgs e)
+        {
+            ready = false;
+            continue_b.Opacity = 60;
+            savepreset_b.Opacity = 60;
+            App.p_board0();
+            Frame.Navigate(typeof(Preset));
+        }
+
+        private void continue_Click(object sender, RoutedEventArgs e)
+        {
+            if (ready)
+            {
+                ready = false;
+                continue_b.Opacity = 60;
+                savepreset_b.Opacity = 60;
+                Frame.Navigate(typeof(Game));
+            }
+        }
+
+        private void clear_b_Click(object sender, RoutedEventArgs e)
+        {
+            App.board0();
+            openned();
         }
     }
 }

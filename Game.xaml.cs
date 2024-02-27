@@ -396,7 +396,7 @@ namespace Hyper_Ship_Battle
                             break;
                         case 3:
                             rect.PointerPressed += Rect_OnPointerPressed_Hit_3;
-                            //rect.Fill = new SolidColorBrush(Colors.Red);
+                            //rect.Fill = new SolidColorBrush(App.hitColor);
                             break;
                         case 4:
                             rect.PointerPressed += Rect_OnPointerPressed_Hit_4;
@@ -442,7 +442,7 @@ namespace Hyper_Ship_Battle
             Rectangle rect = sender as Rectangle;
             if ((rect.Fill as SolidColorBrush)?.Color == App.emptyColor && allowed)
             {
-                rect.Fill = new SolidColorBrush(Colors.Red);
+                rect.Fill = new SolidColorBrush(App.hitColor);
                 r_br2--;
                 if (r_br2 == 0)
                 {
@@ -457,7 +457,7 @@ namespace Hyper_Ship_Battle
             Rectangle rect = sender as Rectangle;
             if ((rect.Fill as SolidColorBrush)?.Color == App.emptyColor && allowed)
             {
-                rect.Fill = new SolidColorBrush(Colors.Red);
+                rect.Fill = new SolidColorBrush(App.hitColor);
                 r_br3--;
                 if (r_br3 == 0)
                 {
@@ -472,7 +472,7 @@ namespace Hyper_Ship_Battle
             Rectangle rect = sender as Rectangle;
             if ((rect.Fill as SolidColorBrush)?.Color == App.emptyColor && allowed)
             {
-                rect.Fill = new SolidColorBrush(Colors.Red);
+                rect.Fill = new SolidColorBrush(App.hitColor);
                 r_br4--;
                 if (r_br4 == 0)
                 {
@@ -487,7 +487,7 @@ namespace Hyper_Ship_Battle
             Rectangle rect = sender as Rectangle;
             if ((rect.Fill as SolidColorBrush)?.Color == App.emptyColor && allowed)
             {
-                rect.Fill = new SolidColorBrush(Colors.Red);
+                rect.Fill = new SolidColorBrush(App.hitColor);
                 r_br5--;
                 if (r_br5 == 0)
                 {
@@ -502,7 +502,7 @@ namespace Hyper_Ship_Battle
             Rectangle rect = sender as Rectangle;
             if ((rect.Fill as SolidColorBrush)?.Color == App.emptyColor && allowed)
             {
-                rect.Fill = new SolidColorBrush(Colors.Red);
+                rect.Fill = new SolidColorBrush(App.hitColor);
                 r_br6--;
                 if (r_br6 == 0)
                 {
@@ -517,7 +517,7 @@ namespace Hyper_Ship_Battle
             Rectangle rect = sender as Rectangle;
             if ((rect.Fill as SolidColorBrush)?.Color == App.emptyColor && allowed)
             {
-                rect.Fill = new SolidColorBrush(Colors.Red);
+                rect.Fill = new SolidColorBrush(App.hitColor);
                 r_br7--;
                 if (r_br7 == 0)
                 {
@@ -535,7 +535,7 @@ namespace Hyper_Ship_Battle
                 {
                     if (p[i, j] == num)
                     {
-                        r[i, j].Fill = new SolidColorBrush(Colors.DarkRed);
+                        r[i, j].Fill = new SolidColorBrush(App.sinkColor);
                     }
                 }
             }
@@ -677,7 +677,7 @@ namespace Hyper_Ship_Battle
                         firstHitX = x;
                         firstHitY = y;
                     }
-                    rect.Fill = new SolidColorBrush(Colors.Red);
+                    rect.Fill = new SolidColorBrush(App.hitColor);
                     switch (p_board[x, y])
                     {
                         case 2:
@@ -834,31 +834,31 @@ namespace Hyper_Ship_Battle
         {
             if (!allowed && turn && endgame == 0)
             {
-                await Task.Delay(10);
+                await Task.Delay(1000);
                 turn_sw();
-                await Task.Delay(10);
+                await Task.Delay(1000);
                 BotTurn();
             }
             else if (!turn && passturn && endgame == 0)
             {
-                await Task.Delay(10);
+                await Task.Delay(1000);
                 turn_sw();
                 allowed = true;
                 passturn = false;
             }
             else if (!turn && !passturn && endgame == 0)
             {
-                await Task.Delay(10);
+                await Task.Delay(1000);
                 BotTurn();
             }
             else if (endgame == 1)
             {
-                await Task.Delay(10);
+                await Task.Delay(1000);
                 win();
             }
             else if (endgame == -1)
             {
-                await Task.Delay(10);
+                await Task.Delay(1000);
                 loss();
             }
         }
@@ -899,12 +899,14 @@ namespace Hyper_Ship_Battle
         {
             hideEnd();
             App.board0();
+            App.resetSetup = true;
             Frame.Navigate(typeof(Setup));
         }
         private void home_b_Click(object sender, RoutedEventArgs e)
         {
             hideEnd();
             App.board0();
+            App.resetSetup = true;
             Frame.Navigate(typeof(MainPage));
         }
     }

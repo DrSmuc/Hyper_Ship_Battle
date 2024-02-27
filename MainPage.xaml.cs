@@ -27,14 +27,15 @@ namespace Hyper_Ship_Battle
             this.InitializeComponent();
         }
 
-        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Exit();
-        }
-
         private void PlayB_Click(object sender, RoutedEventArgs e)
         {
+            App.resetSetup = true;
             Frame.Navigate(typeof(Setup));
+        }
+
+        private void exit_click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
         }
     }
 }
