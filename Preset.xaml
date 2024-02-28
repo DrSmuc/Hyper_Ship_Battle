@@ -23,7 +23,7 @@
         </Grid.Resources>
 
 
-        <Button x:Name="back_b" Grid.Column="0" Grid.Row="0" Content="Back" VerticalAlignment="Center" Height="58" Width="180" FontSize="24" Click="back_Click" HorizontalAlignment="Center"/>
+        <Button x:Name="back_b" Grid.Column="0" Grid.Row="0" Content="Back" VerticalAlignment="Center" Height="58" Width="180" FontSize="24" Click="back_Click" HorizontalAlignment="Center" Foreground="White"/>
 
 
         <Grid.RowDefinitions>

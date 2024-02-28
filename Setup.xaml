@@ -44,10 +44,10 @@
 
         </Grid>
         
-        <Button x:Name="savepreset_b" Content="Save preset" Margin="0,0,750,175" VerticalAlignment="Center" Height="58" Width="180" FontSize="24" Click="savepreset_b_Click" HorizontalAlignment="Center"/>
-        <Button x:Name="loadpreset_b" Content="Load preset" VerticalAlignment="Center" Height="58" Width="180" FontSize="24" Click="loadpreset_b_Click" Margin="0,0,750,0" HorizontalAlignment="Center"/>
-        <Button x:Name="continue_b" Content="Continue" Margin="0,175,750,0" VerticalAlignment="Center" Height="58" Width="180" FontSize="24" Click="continue_Click" HorizontalAlignment="Center"/>
-        <Button x:Name="clear_b" Content="Clear" Margin="0,350,750,0" VerticalAlignment="Center" Height="58" Width="180" FontSize="24" Click="clear_b_Click" HorizontalAlignment="Center"/>
+        <Button x:Name="savepreset_b" Content="Save preset" Margin="0,0,750,175" VerticalAlignment="Center" Height="58" Width="180" FontSize="24" Click="savepreset_b_Click" HorizontalAlignment="Center" Foreground="White"/>
+        <Button x:Name="loadpreset_b" Content="Load preset" VerticalAlignment="Center" Height="58" Width="180" FontSize="24" Click="loadpreset_b_Click" Margin="0,0,750,0" HorizontalAlignment="Center" Foreground="White"/>
+        <Button x:Name="continue_b" Content="Continue" Margin="0,175,750,0" VerticalAlignment="Center" Height="58" Width="180" FontSize="24" Click="continue_Click" HorizontalAlignment="Center" Foreground="White"/>
+        <Button x:Name="clear_b" Content="Clear" Margin="0,350,750,0" VerticalAlignment="Center" Height="58" Width="180" FontSize="24" Click="clear_b_Click" HorizontalAlignment="Center" Foreground="White"/>
     
     
     </Grid>
