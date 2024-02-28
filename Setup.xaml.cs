@@ -415,5 +415,9 @@ namespace Hyper_Ship_Battle
             App.board0();
             openned();
         }
+        private void exit_click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
+        }
     }
 }

@@ -666,7 +666,13 @@ namespace Hyper_Ship_Battle
             }
 
             Rectangle rect = rectangles_p[x, y];
-            if ((rect.Fill as SolidColorBrush)?.Color == App.emptyColor || (rect.Fill as SolidColorBrush)?.Color == App.shipColor)
+
+            if (isOne(x, y, rectangles_p))
+            {
+                direction = 0;
+                goto again;
+            }
+            else if ((rect.Fill as SolidColorBrush)?.Color == App.emptyColor || (rect.Fill as SolidColorBrush)?.Color == App.shipColor)
             {
                 if (p_board[x, y] != 0)
                 {
@@ -809,6 +815,29 @@ namespace Hyper_Ship_Battle
             continue_f();
         }
 
+        private bool isOne(int i, int j, Rectangle[,] board)
+        {
+
+            if (y > 0 && ((board[x, y - 1].Fill as SolidColorBrush)?.Color == App.emptyColor || (board[x, y - 1].Fill as SolidColorBrush)?.Color == App.shipColor || (board[x, y - 1].Fill as SolidColorBrush)?.Color == App.hitColor))
+            {
+                return false;
+            }
+            if (x > 0 && ((board[x - 1, y].Fill as SolidColorBrush)?.Color == App.emptyColor || (board[x - 1, y].Fill as SolidColorBrush)?.Color == App.shipColor || (board[x - 1, y].Fill as SolidColorBrush)?.Color == App.hitColor))
+            {
+                return false;
+            }
+            if (y < 9 && ((board[x, y + 1].Fill as SolidColorBrush)?.Color == App.emptyColor || (board[x, y + 1].Fill as SolidColorBrush)?.Color == App.shipColor || (board[x, y + 1].Fill as SolidColorBrush)?.Color == App.hitColor))
+            {
+                return false;
+            }
+            if (x < 9 && ((board[x + 1, y].Fill as SolidColorBrush)?.Color == App.emptyColor || (board[x + 1, y].Fill as SolidColorBrush)?.Color == App.shipColor || (board[x + 1, y].Fill as SolidColorBrush)?.Color == App.hitColor))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private void turn_sw()
         {
             for (int row = 0; row < GridSize; row++)
@@ -908,6 +937,10 @@ namespace Hyper_Ship_Battle
             App.board0();
             App.resetSetup = true;
             Frame.Navigate(typeof(MainPage));
+        }
+        private void exit_click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
         }
     }
 }

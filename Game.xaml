@@ -15,6 +15,11 @@
                 <GradientStop Color="#FF00A3FF" Offset="0"/>
             </LinearGradientBrush>
         </Grid.Background>
+        <MenuBar VerticalAlignment="Top" HorizontalAlignment="Right">
+            <MenuBarItem Title="Exit" HorizontalAlignment="Right">
+                <MenuFlyoutItem Text="Exit" Click="exit_click" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
+            </MenuBarItem>
+        </MenuBar>
 
         <Grid x:Name="GameGrid" Margin="10" Background="#FF00A3FF" HorizontalAlignment="Center" VerticalAlignment="Center">
 
