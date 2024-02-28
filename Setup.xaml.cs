@@ -4,6 +4,7 @@ using Windows.UI;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
+using Npgsql;
 
 namespace Hyper_Ship_Battle
 {
@@ -316,6 +317,53 @@ namespace Hyper_Ship_Battle
             }
         }
 
+        public void savePreset()
+        {
+
+            //var connectionString = "postgresql://dr:dFvz2ADZeOpME1TfRcAI1A@narrow-onager-13839.8nj.gcp-europe-west1.cockroachlabs.cloud:26257/presets?sslmode=verify-full";
+
+            //dFvz2ADZeOpME1TfRcAI1A
+            //postgresql://dr:dFvz2ADZeOpME1TfRcAI1A@narrow-onager-13839.8nj.gcp-europe-west1.cockroachlabs.cloud:26257/presets?sslmode=verify-full
+
+
+            NpgsqlConnectionStringBuilder builder = new NpgsqlConnectionStringBuilder();
+
+            // Set connection parameters
+            builder.Host = "narrow-onager-13839.8nj.gcp-europe-west1.cockroachlabs.cloud";
+            builder.Port = 26257;
+            builder.Username = "dr";
+            builder.Password = "dFvz2ADZeOpME1TfRcAI1A";
+            builder.Database = "presets";
+            builder.SslMode = SslMode.Require;
+
+            string connectionString = builder.ConnectionString;
+
+            try
+            {
+                string board_str = "9";
+                    for (int i = 0; i < 10; i++)
+                    {
+                        for (int j = 0; j < 10; j++)
+                        {
+                            board_str += App.p_board[i, j];
+                        }
+                    }
+                var connection = new NpgsqlConnection(connectionString);
+                connection.Open();
+
+                string sql = "INSERT INTO preset(board) VALUES('" + board_str + "');";
+
+                var cmd = new NpgsqlCommand(sql, connection);
+
+                // Execute the query and retrieve data
+                var reader = cmd.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
 
         // poruka za usera
         private async void ShowMessage(string message)
@@ -335,9 +383,10 @@ namespace Hyper_Ship_Battle
 
         private void savepreset_b_Click(object sender, RoutedEventArgs e)
         {
+
             if (ready)
             {
-                //save
+                savePreset();
             }
         }
 

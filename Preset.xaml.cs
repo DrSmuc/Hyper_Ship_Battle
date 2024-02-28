@@ -96,23 +96,13 @@ namespace Hyper_Ship_Battle
                     if (m > 8)
                         break;
                     string board_str = reader.GetString(0);
-                    int count = -1;
+                    int count = 0;
                     for (int i=0; i<10; i++)
                     {
                         for (int j=0;j<10;j++)
                         {
                             count++;
-                            int x;
-                            if (boards[m, i, j]>5)
-                            {
-                                x = boards[m, i, j];
-                            }
                             boards[m, i, j] = board_str[count] - '0';
-                            
-                            if (boards[m, i, j]>5)
-                            {
-                                x = boards[m, i, j];
-                            }
                         }
                     }
                     m++;
@@ -155,7 +145,7 @@ namespace Hyper_Ship_Battle
                             rect.Height = 24;
                             rect.Width = 24;
                             rect.PointerPressed += Rect_PointerPressed;
-                            rect.Name = "r" + (m * n + n);
+                            rect.Name = "r" + count;
                             rect.Tag = m;
                             Grid.SetRow(rect, i);
                             Grid.SetColumn(rect, j);
@@ -186,9 +176,6 @@ namespace Hyper_Ship_Battle
                                 return;
                             }
                             App.p_board[i, j] = boards[0, i, j];
-                            int x;
-                            if (App.p_board[i, j] != 0)
-                                x = App.p_board[i, j];
                         }
                     }
                     break;
@@ -197,7 +184,7 @@ namespace Hyper_Ship_Battle
                     {
                         for (int j = 0; j < 10; j++)
                         {
-                            if (boards[0, i, j] == -1)
+                            if (boards[1, i, j] == -1)
                             {
                                 App.p_board0();
                                 return;
@@ -211,7 +198,7 @@ namespace Hyper_Ship_Battle
                     {
                         for (int j = 0; j < 10; j++)
                         {
-                            if (boards[0, i, j] == -1)
+                            if (boards[2, i, j] == -1)
                             {
                                 App.p_board0();
                                 return;
@@ -225,7 +212,7 @@ namespace Hyper_Ship_Battle
                     {
                         for (int j = 0; j < 10; j++)
                         {
-                            if (boards[0, i, j] == -1)
+                            if (boards[3, i, j] == -1)
                             {
                                 App.p_board0();
                                 return;
@@ -239,7 +226,7 @@ namespace Hyper_Ship_Battle
                     {
                         for (int j = 0; j < 10; j++)
                         {
-                            if (boards[0, i, j] == -1)
+                            if (boards[4, i, j] == -1)
                             {
                                 App.p_board0();
                                 return;
@@ -253,7 +240,7 @@ namespace Hyper_Ship_Battle
                     {
                         for (int j = 0; j < 10; j++)
                         {
-                            if (boards[0, i, j] == -1)
+                            if (boards[5, i, j] == -1)
                             {
                                 App.p_board0();
                                 return;
@@ -267,7 +254,7 @@ namespace Hyper_Ship_Battle
                     {
                         for (int j = 0; j < 10; j++)
                         {
-                            if (boards[0, i, j] == -1)
+                            if (boards[6, i, j] == -1)
                             {
                                 App.p_board0();
                                 return;
@@ -281,7 +268,7 @@ namespace Hyper_Ship_Battle
                     {
                         for (int j = 0; j < 10; j++)
                         {
-                            if (boards[0, i, j] == -1)
+                            if (boards[7, i, j] == -1)
                             {
                                 App.p_board0();
                                 return;
@@ -295,7 +282,7 @@ namespace Hyper_Ship_Battle
                     {
                         for (int j = 0; j < 10; j++)
                         {
-                            if (boards[0, i, j] == -1)
+                            if (boards[8, i, j] == -1)
                             {
                                 App.p_board0();
                                 return;
