@@ -14,7 +14,7 @@
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FF000128" Offset="0.934"/>
+                <GradientStop Color="#FF000240" Offset="0.987"/>
                 <GradientStop Color="#FF00A3FF" Offset="0"/>
             </LinearGradientBrush>
         </Grid.Background>
@@ -24,8 +24,8 @@
             </MenuBarItem>
         </MenuBar>
 
-        <TextBlock x:Name="HelloText" HorizontalAlignment="Center" Text="HYPER SHIP BATTLE" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Ravie" FontSize="72" FontWeight="Bold" FontStyle="Italic" TextDecorations="None" Margin="0,0,0,150" TextWrapping="WrapWholeWords"/>
-        <Button x:Name="PlayB" Content="Play" HorizontalAlignment="Center" Height="115" Width="306" FontFamily="Ravie" FontSize="72" Click="PlayB_Click" Margin="0,150,0,0" CornerRadius="15"/>
-        <Button x:Name="ExitB" Content="Quit" HorizontalAlignment="Center" Height="115" Width="306" FontFamily="Ravie" FontSize="72" Click="exit_click" Margin="0,475,0,0" CornerRadius="15"/>
+        <TextBlock x:Name="HelloText" HorizontalAlignment="Center" Text="HYPER SHIP BATTLE" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Ravie" FontSize="72" FontWeight="Bold" FontStyle="Italic" TextDecorations="None" Margin="0,0,0,150" TextWrapping="WrapWholeWords" Foreground="White"/>
+        <Button x:Name="PlayB" Content="Play" HorizontalAlignment="Center" Height="115" Width="306" FontFamily="Ravie" FontSize="72" Click="PlayB_Click" Margin="0,150,0,0" CornerRadius="15" Foreground="White"/>
+        <Button x:Name="ExitB" Content="Quit" HorizontalAlignment="Center" Height="115" Width="306" FontFamily="Ravie" FontSize="72" Click="exit_click" Margin="0,475,0,0" CornerRadius="15" Foreground="White"/>
     </Grid>
 </Page>
