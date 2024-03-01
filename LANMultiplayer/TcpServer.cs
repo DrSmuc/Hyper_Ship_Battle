@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Core;
+using Npgsql;
 
 namespace Hyper_Ship_Battle.LAN_Multiplayer
 {
@@ -22,7 +23,7 @@ namespace Hyper_Ship_Battle.LAN_Multiplayer
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
 
-        public void StartServer(int port)
+        public void StartServer(string name, int port)
         {
             IPAddress getIPAddress()
             {
@@ -44,6 +45,23 @@ namespace Hyper_Ship_Battle.LAN_Multiplayer
                 Thread acceptThread = new Thread(AcceptClients);
                 acceptThread.IsBackground = true;
                 acceptThread.Start();
+
+                NpgsqlConnectionStringBuilder builder = new NpgsqlConnectionStringBuilder();
+                builder.Host = "narrow-onager-13839.8nj.gcp-europe-west1.cockroachlabs.cloud";
+                builder.Port = 26257;
+                builder.Username = "dr";
+                builder.Password = "dFvz2ADZeOpME1TfRcAI1A";
+                builder.Database = "presets";
+                builder.SslMode = SslMode.Require;
+                string connectionString = builder.ConnectionString;
+
+                var connection = new NpgsqlConnection(connectionString);
+                connection.Open();
+                string sql = "INSERT INTO room_list(name, ip) VALUES('" + name + "', '" + getIPAddress().ToString() + "');";
+                var cmd = new NpgsqlCommand(sql, connection);
+                var reader = cmd.ExecuteReader();
+
+                App.serverActive = true;
             }
             catch (Exception ex)
             {
@@ -113,6 +131,7 @@ namespace Hyper_Ship_Battle.LAN_Multiplayer
                 isRunning = false;
                 serverSocket.Close();
                 clientSocket?.Close();
+                App.serverActive = false;
             }
             catch (Exception ex)
             {

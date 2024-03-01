@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI;
 using System.Data.Common;
+using Windows.Security.Authentication.Identity.Core;
 
 namespace Hyper_Ship_Battle
 {
@@ -40,6 +41,15 @@ namespace Hyper_Ship_Battle
         public static Color strokeColor = Colors.Gray;
         public static Color hitColor = Colors.Red;
         public static Color sinkColor = Colors.DarkRed;
+
+        private static int port_number = 1337;
+        public static bool serverActive;
+        public static bool clientActive;
+
+        public static int PORT_NUMBER
+        {
+            get { return port_number; }
+        }
 
         /*private static string emptyColorHex = "#FF0000";
         public static Color emptyColor = Color.FromArgb(
@@ -75,6 +85,8 @@ namespace Hyper_Ship_Battle
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             board0();
+            serverActive = false;
+            clientActive = false;
         }
 
         public static void board0()

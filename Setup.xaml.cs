@@ -5,6 +5,8 @@ using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 using Npgsql;
+using Hyper_Ship_Battle.LAN_Multiplayer;
+using System.Collections.Specialized;
 
 namespace Hyper_Ship_Battle
 {
@@ -24,14 +26,14 @@ namespace Hyper_Ship_Battle
         private bool b7 = false;
 
         private bool ready = false;
+        private bool ready_opponent = false;
+
+        private TcpServer host;
 
         public Setup()
         {
             this.InitializeComponent();
-            InitializeGrid();
-            ready = false;
-            continue_b.Opacity = 60;
-            savepreset_b.Opacity = 60;
+            openned();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -45,6 +47,15 @@ namespace Hyper_Ship_Battle
             else if (App.readySetup)
             {
                 ready_f();
+            }
+            if (App.serverActive)
+            {
+                host = ServerManager.Instance.GetHost();
+                host.MessageReceived += opponent_ready;
+            }
+            else if (App.clientActive)
+            {
+                host.MessageReceived += clientStartGame;
             }
         }
 
@@ -319,16 +330,8 @@ namespace Hyper_Ship_Battle
 
         public void savePreset()
         {
-
-            //var connectionString = "postgresql://dr:dFvz2ADZeOpME1TfRcAI1A@narrow-onager-13839.8nj.gcp-europe-west1.cockroachlabs.cloud:26257/presets?sslmode=verify-full";
-
-            //dFvz2ADZeOpME1TfRcAI1A
-            //postgresql://dr:dFvz2ADZeOpME1TfRcAI1A@narrow-onager-13839.8nj.gcp-europe-west1.cockroachlabs.cloud:26257/presets?sslmode=verify-full
-
-
             NpgsqlConnectionStringBuilder builder = new NpgsqlConnectionStringBuilder();
 
-            // Set connection parameters
             builder.Host = "narrow-onager-13839.8nj.gcp-europe-west1.cockroachlabs.cloud";
             builder.Port = 26257;
             builder.Username = "dr";
@@ -372,15 +375,6 @@ namespace Hyper_Ship_Battle
             await dialog.ShowAsync();
         }
 
-        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Exit();
-        }
-        private void MenuFlyoutItem_Click_2(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(Game));
-        }
-
         private void savepreset_b_Click(object sender, RoutedEventArgs e)
         {
 
@@ -393,6 +387,10 @@ namespace Hyper_Ship_Battle
         private void loadpreset_b_Click(object sender, RoutedEventArgs e)
         {
             ready = false;
+            if (App.clientActive)
+            {
+                // send not ready (0)
+            }
             continue_b.Opacity = 60;
             savepreset_b.Opacity = 60;
             App.p_board0();
@@ -401,13 +399,65 @@ namespace Hyper_Ship_Battle
 
         private void continue_Click(object sender, RoutedEventArgs e)
         {
-            if (ready)
+            if (ready && ((App.serverActive && ready_opponent) || App.clientActive))
             {
-                ready = false;
                 continue_b.Opacity = 60;
+                ready = false;
                 savepreset_b.Opacity = 60;
-                Frame.Navigate(typeof(Game));
+                if (App.serverActive)
+                {
+                    // send data to start game
+                    host.MessageReceived -= opponent_ready;
+                    Frame.Navigate(typeof(LANHost));
+                }
+                else if (App.clientActive)
+                {
+                    continue_b.Background = new SolidColorBrush(Colors.Lime);
+                    
+                    // send ready (1) + board
+
+                }
+                else
+                {
+                    Frame.Navigate(typeof(Game));
+                }
             }
+        }
+
+        private void opponent_ready(object sender, string message)
+        {
+            if (message[0] == '1')
+            {
+                ready_opponent = true;
+                continue_b.Background = new SolidColorBrush(Colors.Lime);
+                int count = 1;
+                for (int i = 0;i<10;i++)
+                {
+                    for (int j=0;j<10;j++)
+                    {
+                        App.r_board[i, j] = message[count];
+                        count++;
+                    }
+                }
+            }
+            else if (message[0] == '0')
+            {
+                ready_opponent = false;
+                continue_b.Background = new SolidColorBrush(Colors.Blue);
+            }
+        }
+
+        private void clientStartGame(object sender, string message)
+        {
+            // get app.board_r
+            // navigate to LANClient
+        }
+
+        private void sendClientReady(string msg)
+        {
+            // client.send(msg + App.board_p);
+
+            // forst number is 0 - not ready, or 1 - ready, then board
         }
 
         private void clear_b_Click(object sender, RoutedEventArgs e)
