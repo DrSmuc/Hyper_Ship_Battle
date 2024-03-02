@@ -46,6 +46,8 @@ namespace Hyper_Ship_Battle
         public static bool serverActive;
         public static bool clientActive;
 
+        public static bool ready_opponent = false;
+
         public static int PORT_NUMBER
         {
             get { return port_number; }

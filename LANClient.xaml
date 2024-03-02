@@ -9,6 +9,50 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF000128" Offset="0.934"/>
+                <GradientStop Color="#FF00A3FF" Offset="0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <MenuBar VerticalAlignment="Top" HorizontalAlignment="Right">
+            <MenuBarItem Title="Exit" HorizontalAlignment="Right">
+                <MenuFlyoutItem Text="Exit" Click="exit_click" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
+            </MenuBarItem>
+        </MenuBar>
+
+        <Grid x:Name="GameGrid" Margin="10" Background="#FF00A3FF" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+        </Grid>
+
+        <TextBlock x:Name="endstatus" HorizontalAlignment="Center" TextWrapping="Wrap" Text="lorem lorem" VerticalAlignment="Center" Margin="0,0,0,150" TextAlignment="Center" FontSize="72" FontFamily="BankGothic Lt BT" FontWeight="Bold" FontStyle="Italic" Canvas.ZIndex="10" Foreground="White"/>
+        <Button x:Name="home_b" Content="Home" VerticalAlignment="Center" Height="70" Width="160" HorizontalAlignment="Center" Margin="0,50,0,0" Click="home_b_Click" Background="#FF00B5FF" FontSize="24" FontFamily="BankGothic Lt BT" CornerRadius="15" FontWeight="Bold" Canvas.ZIndex="10" FocusVisualPrimaryBrush="White" FocusVisualSecondaryBrush="#99000000" BorderBrush="Transparent" Foreground="White"/>
+        <Canvas x:Name="myCanvas" Canvas.ZIndex="8" Opacity="0.3" Background="#FF717171"/>
 
     </Grid>
 </Page>

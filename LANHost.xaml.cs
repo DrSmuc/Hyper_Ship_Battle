@@ -458,6 +458,10 @@ namespace Hyper_Ship_Battle
             else
             {
                 int x = 0, y = 0;
+
+                x = message[0] - '0';
+                y = message[1] - '0';
+
                 opponentShot(x, y);
             }
         }
@@ -465,7 +469,6 @@ namespace Hyper_Ship_Battle
         private void hideEnd()
         {
             endstatus.Visibility = Visibility.Collapsed;
-            rematch_b.Visibility = Visibility.Collapsed;
             home_b.Visibility = Visibility.Collapsed;
             myCanvas.Visibility = Visibility.Collapsed;
             myCanvas.Visibility = Visibility.Collapsed;
@@ -475,7 +478,6 @@ namespace Hyper_Ship_Battle
         {
             endstatus.Text = "Mission passed";
             endstatus.Visibility = Visibility.Visible;
-            rematch_b.Visibility = Visibility.Visible;
             home_b.Visibility = Visibility.Visible;
             myCanvas.Visibility = Visibility.Visible;
             myCanvas.Background = new SolidColorBrush(App.shipColor);
@@ -486,7 +488,6 @@ namespace Hyper_Ship_Battle
         {
             endstatus.Text = "Mission failled";
             endstatus.Visibility = Visibility.Visible;
-            rematch_b.Visibility = Visibility.Visible;
             home_b.Visibility = Visibility.Visible;
             myCanvas.Visibility = Visibility.Visible;
             myCanvas.Background = new SolidColorBrush(App.shipColor);
@@ -494,22 +495,17 @@ namespace Hyper_Ship_Battle
             myCanvas.Opacity = 5;
         }
 
-        private void rematch_b_Click(object sender, RoutedEventArgs e)
-        {
-            hideEnd();
-            App.board0();
-            App.resetSetup = true;
-            Frame.Navigate(typeof(Setup));
-        }
         private void home_b_Click(object sender, RoutedEventArgs e)
         {
             hideEnd();
             App.board0();
             App.resetSetup = true;
+            host.StopServer();
             Frame.Navigate(typeof(MainPage));
         }
         private void exit_click(object sender, RoutedEventArgs e)
         {
+            host.StopServer();
             Application.Current.Exit();
         }
     }

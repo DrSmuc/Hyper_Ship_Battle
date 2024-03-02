@@ -18,6 +18,7 @@ namespace Hyper_Ship_Battle.LAN_Multiplayer
         {
             try
             {
+                App.clientActive = true;
                 clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 clientSocket.Connect(ipAddress, port);
 
@@ -76,6 +77,7 @@ namespace Hyper_Ship_Battle.LAN_Multiplayer
             {
                 clientSocket.Shutdown(SocketShutdown.Both);
                 clientSocket.Close();
+                App.clientActive = false;
             }
             catch (Exception ex)
             {

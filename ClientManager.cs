@@ -7,31 +7,31 @@ using System.Threading.Tasks;
 
 namespace Hyper_Ship_Battle
 {
-    public class ServerManager
+    internal class ClientManager
     {
-        private static ServerManager instance;
-        private TcpServer host;
+        private static ClientManager instance;
+        private TcpClient client;
 
-        private ServerManager()
+        private ClientManager()
         {
-            host = new TcpServer();
+            client = new TcpClient();
         }
 
-        public static ServerManager Instance
+        public static ClientManager Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new ServerManager();
+                    instance = new ClientManager();
                 }
                 return instance;
             }
         }
 
-        public TcpServer GetHost()
+        public TcpClient GetClient()
         {
-            return host;
+            return client;
         }
     }
 }

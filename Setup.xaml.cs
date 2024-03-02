@@ -26,9 +26,9 @@ namespace Hyper_Ship_Battle
         private bool b7 = false;
 
         private bool ready = false;
-        private bool ready_opponent = false;
 
         private TcpServer host;
+        private TcpClient client;
 
         public Setup()
         {
@@ -52,10 +52,19 @@ namespace Hyper_Ship_Battle
             {
                 host = ServerManager.Instance.GetHost();
                 host.MessageReceived += opponent_ready;
+                if (App.ready_opponent)
+                {
+                    continue_b.Background = new SolidColorBrush(Colors.Lime);
+                }
+                else
+                {
+                    continue_b.Background = new SolidColorBrush(Colors.Red);
+                }
             }
             else if (App.clientActive)
             {
-                host.MessageReceived += clientStartGame;
+                client = ClientManager.Instance.GetClient();
+                client.MessageReceived += clientStartGame;
             }
         }
 
@@ -389,7 +398,7 @@ namespace Hyper_Ship_Battle
             ready = false;
             if (App.clientActive)
             {
-                // send not ready (0)
+                client.Send("n");
             }
             continue_b.Opacity = 60;
             savepreset_b.Opacity = 60;
@@ -399,23 +408,30 @@ namespace Hyper_Ship_Battle
 
         private void continue_Click(object sender, RoutedEventArgs e)
         {
-            if (ready && ((App.serverActive && ready_opponent) || App.clientActive))
+            if (ready && ((App.serverActive && App.ready_opponent) || (!App.serverActive && !App.ready_opponent) || App.clientActive))
             {
                 continue_b.Opacity = 60;
                 ready = false;
                 savepreset_b.Opacity = 60;
                 if (App.serverActive)
                 {
-                    // send data to start game
+                    host.Send("r");
                     host.MessageReceived -= opponent_ready;
                     Frame.Navigate(typeof(LANHost));
                 }
                 else if (App.clientActive)
                 {
                     continue_b.Background = new SolidColorBrush(Colors.Lime);
-                    
-                    // send ready (1) + board
 
+                    string message = "r";
+                    for (int i=0;i<10;i++)
+                    {
+                        for (int j=0;j<10;j++)
+                        {
+                            message += App.p_board[i, j].ToString();
+                        }
+                    }
+                    client.Send(message);
                 }
                 else
                 {
@@ -426,24 +442,24 @@ namespace Hyper_Ship_Battle
 
         private void opponent_ready(object sender, string message)
         {
-            if (message[0] == '1')
+            if (message[0] == 'r')  // ready
             {
-                ready_opponent = true;
+                App.ready_opponent = true;
                 continue_b.Background = new SolidColorBrush(Colors.Lime);
                 int count = 1;
                 for (int i = 0;i<10;i++)
                 {
                     for (int j=0;j<10;j++)
                     {
-                        App.r_board[i, j] = message[count];
+                        App.r_board[i, j] = message[count] - '0';
                         count++;
                     }
                 }
             }
-            else if (message[0] == '0')
+            else if (message[0] == 'n') // not redy
             {
-                ready_opponent = false;
-                continue_b.Background = new SolidColorBrush(Colors.Blue);
+                App.ready_opponent = false;
+                continue_b.Background = new SolidColorBrush(Colors.Red);
             }
         }
 
@@ -451,18 +467,35 @@ namespace Hyper_Ship_Battle
         {
             // get app.board_r
             // navigate to LANClient
-        }
 
-        private void sendClientReady(string msg)
-        {
-            // client.send(msg + App.board_p);
+            // if meg[0] == 'r'
+            // load field
 
-            // forst number is 0 - not ready, or 1 - ready, then board
+
+            if (message[0]=='r')
+            {
+                int count = 1;
+                for (int i=0;i<10;i++)
+                {
+                    for (int j=0;i<10;j++)
+                    {
+                        App.r_board[i, j] = message[count] + '0';
+                    }
+                }
+                client.MessageReceived -= clientStartGame;
+                Frame.Navigate(typeof(LANClient));
+            }
         }
 
         private void clear_b_Click(object sender, RoutedEventArgs e)
         {
             App.board0();
+            ready = false;
+            if (App.clientActive)
+            {
+                client.Send("n");
+                continue_b.Background = new SolidColorBrush(Colors.Red);
+            }
             openned();
         }
         private void exit_click(object sender, RoutedEventArgs e)

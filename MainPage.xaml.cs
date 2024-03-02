@@ -69,7 +69,7 @@ namespace Hyper_Ship_Battle
             }
             else
             {
-                // room select
+                Frame.Navigate(typeof(RoomSelect));
             }
         }
 
