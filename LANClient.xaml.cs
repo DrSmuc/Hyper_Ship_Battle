@@ -79,11 +79,7 @@ namespace Hyper_Ship_Battle
             InitializeGrid_r();
             hideEnd();
             client = ClientManager.Instance.GetClient();
-            if (!App.clientReceivedGameSet)
-            {
-                App.clientReceivedGameSet = true;
-                client.MessageReceived += MessageReceived;
-            }
+            client.MessageReceived += MessageReceived;
         }
 
         private void Start()
@@ -467,6 +463,8 @@ namespace Hyper_Ship_Battle
             myCanvas.Background = new SolidColorBrush(App.shipColor);
             myCanvas.Background.Opacity = 90;
             myCanvas.Opacity = 5;
+            client.MessageReceived -= MessageReceived;
+            client.Disconnect();
         }
         private void loss()
         {
@@ -477,6 +475,7 @@ namespace Hyper_Ship_Battle
             myCanvas.Background = new SolidColorBrush(App.shipColor);
             myCanvas.Background.Opacity = 90;
             myCanvas.Opacity = 5;
+            client.Disconnect();
         }
 
         private void home_b_Click(object sender, RoutedEventArgs e)

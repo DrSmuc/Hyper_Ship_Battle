@@ -20,7 +20,7 @@ namespace Hyper_Ship_Battle.LAN_Multiplayer
 
         public TcpServer()
         {
-            serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            //serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
 
         public void StartServer(string name, int port)
@@ -39,6 +39,9 @@ namespace Hyper_Ship_Battle.LAN_Multiplayer
             }
             try
             {
+                
+                    serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                
                 serverSocket.Bind(new IPEndPoint(getIPAddress(), port));
                 serverSocket.Listen(10);
                 isRunning = true;
@@ -132,6 +135,7 @@ namespace Hyper_Ship_Battle.LAN_Multiplayer
                 serverSocket.Close();
                 clientSocket?.Close();
                 App.serverActive = false;
+                serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             }
             catch (Exception ex)
             {

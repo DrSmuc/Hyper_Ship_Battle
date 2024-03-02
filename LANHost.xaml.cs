@@ -70,12 +70,6 @@ namespace Hyper_Ship_Battle
         public LANHost()
         {
             this.InitializeComponent();
-            host = ServerManager.Instance.GetHost();
-            if (!App.hostReceivedGameSet)
-            {
-                App.hostReceivedGameSet = true;
-                host.MessageReceived += MessageReceived;
-            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -90,10 +84,8 @@ namespace Hyper_Ship_Battle
             InitializeGrid_p();
             InitializeGrid_r();
             hideEnd();
-            if (host == null)
-            {
-                host = ServerManager.Instance.GetHost();
-            }
+            host = ServerManager.Instance.GetHost();
+            host.MessageReceived += MessageReceived;
         }
 
         private void Start()
@@ -334,13 +326,11 @@ namespace Hyper_Ship_Battle
             }
             if (shipsRemaining_r == 0)
             {
-                host.Send("loss");
                 endgame = 1;
                 continue_f();
             }
             else if (shipsRemaining_p == 0)
             {
-                host.Send("win");
                 endgame = -1;
                 continue_f();
             }
@@ -442,14 +432,14 @@ namespace Hyper_Ship_Battle
             }
             else if (endgame == 1)
             {
-                host.Send("loss");
                 await Task.Delay(1000);
+                host.Send("loss");
                 win();
             }
             else if (endgame == -1)
             {
-                host.Send("win");
                 await Task.Delay(1000);
+                host.Send("win");
                 loss();
             }
         }
@@ -491,6 +481,7 @@ namespace Hyper_Ship_Battle
             myCanvas.Background = new SolidColorBrush(App.shipColor);
             myCanvas.Background.Opacity = 90;
             myCanvas.Opacity = 5;
+            host.StopServer();
         }
         private void loss()
         {
@@ -501,6 +492,8 @@ namespace Hyper_Ship_Battle
             myCanvas.Background = new SolidColorBrush(App.shipColor);
             myCanvas.Background.Opacity = 90;
             myCanvas.Opacity = 5;
+            host.MessageReceived -= MessageReceived;
+            host.StopServer();
         }
 
         private void home_b_Click(object sender, RoutedEventArgs e)
