@@ -70,6 +70,12 @@ namespace Hyper_Ship_Battle
         public LANHost()
         {
             this.InitializeComponent();
+            host = ServerManager.Instance.GetHost();
+            if (!App.hostReceivedGameSet)
+            {
+                App.hostReceivedGameSet = true;
+                host.MessageReceived += MessageReceived;
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -84,8 +90,10 @@ namespace Hyper_Ship_Battle
             InitializeGrid_p();
             InitializeGrid_r();
             hideEnd();
-            host = ServerManager.Instance.GetHost();
-            host.MessageReceived += MessageReceived;
+            if (host == null)
+            {
+                host = ServerManager.Instance.GetHost();
+            }
         }
 
         private void Start()

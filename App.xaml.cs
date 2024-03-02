@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI;
 using System.Data.Common;
 using Windows.Security.Authentication.Identity.Core;
+using Windows.Media.Streaming.Adaptive;
 
 namespace Hyper_Ship_Battle
 {
@@ -47,6 +48,11 @@ namespace Hyper_Ship_Battle
         public static bool clientActive;
 
         public static bool ready_opponent = false;
+
+        public static bool hostReceivedSetupSet;
+        public static bool hostReceivedGameSet;
+        public static bool clientReceivedSetupSet;
+        public static bool clientReceivedGameSet;
 
         public static int PORT_NUMBER
         {

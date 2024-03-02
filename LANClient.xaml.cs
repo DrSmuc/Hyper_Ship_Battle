@@ -79,13 +79,17 @@ namespace Hyper_Ship_Battle
             InitializeGrid_r();
             hideEnd();
             client = ClientManager.Instance.GetClient();
-            client.MessageReceived += MessageReceived;
+            if (!App.clientReceivedGameSet)
+            {
+                App.clientReceivedGameSet = true;
+                client.MessageReceived += MessageReceived;
+            }
         }
 
         private void Start()
         {
-            allowed = true;
-            turn = true;
+            allowed = false;
+            turn = false;
             endgame = 0;
 
             p_br2 = 0;
@@ -131,7 +135,7 @@ namespace Hyper_Ship_Battle
                     Grid.SetColumn(rect, col);
 
                     rectangles_p[row, col] = rect;
-                    rect.Visibility = Visibility.Collapsed;
+                    rect.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -180,7 +184,7 @@ namespace Hyper_Ship_Battle
                     GameGrid.Children.Add(rect);
                     Grid.SetRow(rect, row);
                     Grid.SetColumn(rect, col);
-                    rect.Visibility = Visibility.Visible;
+                    rect.Visibility = Visibility.Collapsed;
 
                     rectangles_r[row, col] = rect;
                 }

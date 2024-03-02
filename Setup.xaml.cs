@@ -33,6 +33,32 @@ namespace Hyper_Ship_Battle
         public Setup()
         {
             this.InitializeComponent();
+            if (App.serverActive)
+            {
+                host = ServerManager.Instance.GetHost();
+                if (!App.hostReceivedSetupSet)
+                {
+                    App.hostReceivedSetupSet = true;
+                    host.MessageReceived += opponent_ready;
+                }
+                if (App.ready_opponent)
+                {
+                    continue_b.Background = new SolidColorBrush(Colors.Lime);
+                }
+                else
+                {
+                    continue_b.Background = new SolidColorBrush(Colors.Red);
+                }
+            }
+            else if (App.clientActive)
+            {
+                client = ClientManager.Instance.GetClient();
+                if (!App.clientReceivedSetupSet)
+                {
+                    App.clientReceivedSetupSet = true;
+                    client.MessageReceived += clientStartGame;
+                }
+            }
             openned();
         }
 
@@ -50,8 +76,6 @@ namespace Hyper_Ship_Battle
             }
             if (App.serverActive)
             {
-                host = ServerManager.Instance.GetHost();
-                host.MessageReceived += opponent_ready;
                 if (App.ready_opponent)
                 {
                     continue_b.Background = new SolidColorBrush(Colors.Lime);
@@ -64,7 +88,6 @@ namespace Hyper_Ship_Battle
             else if (App.clientActive)
             {
                 client = ClientManager.Instance.GetClient();
-                client.MessageReceived += clientStartGame;
             }
         }
 
@@ -415,7 +438,16 @@ namespace Hyper_Ship_Battle
                 savepreset_b.Opacity = 60;
                 if (App.serverActive)
                 {
-                    host.Send("r");
+                    string message = "r";
+                    for (int i = 0; i < 10; i++)
+                    {
+                        for (int j = 0; j < 10; j++)
+                        {
+                            message += App.p_board[i, j].ToString();
+                        }
+                    }
+                    host.Send(message);
+
                     host.MessageReceived -= opponent_ready;
                     Frame.Navigate(typeof(LANHost));
                 }
@@ -479,11 +511,11 @@ namespace Hyper_Ship_Battle
                 {
                     for (int j=0;i<10;j++)
                     {
-                        App.r_board[i, j] = message[count] + '0';
+                        App.r_board[i, j] = message[count] - '0';
                     }
                 }
-                client.MessageReceived -= clientStartGame;
-                Frame.Navigate(typeof(LANClient));
+                host.MessageReceived -= clientStartGame;
+                gotoLANClient();
             }
         }
 
@@ -501,6 +533,11 @@ namespace Hyper_Ship_Battle
         private void exit_click(object sender, RoutedEventArgs e)
         {
             Application.Current.Exit();
+        }
+
+        private void gotoLANClient()
+        {
+            Frame.Navigate (typeof(LANClient));
         }
     }
 }
