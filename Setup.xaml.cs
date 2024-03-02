@@ -418,15 +418,18 @@ namespace Hyper_Ship_Battle
 
         private void loadpreset_b_Click(object sender, RoutedEventArgs e)
         {
-            ready = false;
-            if (App.clientActive)
+            if (!App.serverActive && !App.clientActive)
             {
-                client.Send("n");
+                ready = false;
+                if (App.clientActive)
+                {
+                    client.Send("n");
+                }
+                continue_b.Opacity = 60;
+                savepreset_b.Opacity = 60;
+                App.p_board0();
+                Frame.Navigate(typeof(Preset));
             }
-            continue_b.Opacity = 60;
-            savepreset_b.Opacity = 60;
-            App.p_board0();
-            Frame.Navigate(typeof(Preset));
         }
 
         private void continue_Click(object sender, RoutedEventArgs e)
