@@ -458,16 +458,29 @@ namespace Hyper_Ship_Battle
                 //turn 1 - client shoot, 0 - host shoot
                 string reply = "y";
                 reply += (turn) ? "0" : "1";
+
+
+                reply += 2 - p_br2;
+                reply += 3 - p_br3;
+                reply += 4 - p_br4;
+                reply += 5 - p_br5;
+                reply += 2 - p_br6;
+                reply += 3 - p_br7;
+
+                reply += r_br2 - 2;
+                reply += r_br3 - 3;
+                reply += r_br4 - 4;
+                reply += r_br5 - 5;
+                reply += r_br6 - 2;
+                reply += r_br7 - 3;
+
+                // resume on count = 14
                 for (int i = 0;i<10;i++)
                 {
                     for (int j = 0;j<10;j++)
                     {
                         Rectangle rh = rectangles_p[i, j];
-                        if ((rh.Fill as SolidColorBrush)?.Color == App.emptyColor)
-                        {
-                            reply += "0";
-                        }
-                        else if ((rh.Fill as SolidColorBrush)?.Color == App.missColor)
+                        if ((rh.Fill as SolidColorBrush)?.Color == App.missColor)
                         {
                             reply += "1";
                         }
@@ -479,12 +492,11 @@ namespace Hyper_Ship_Battle
                         {
                             reply += "3";
                         }
-                        Rectangle rc = rectangles_r[i, j];
-                        if ((rc.Fill as SolidColorBrush)?.Color == App.emptyColor)
-                        {
+                        else 
                             reply += "0";
-                        }
-                        else if ((rc.Fill as SolidColorBrush)?.Color == App.missColor)
+
+                        Rectangle rc = rectangles_r[i, j];
+                        if ((rc.Fill as SolidColorBrush)?.Color == App.missColor)
                         {
                             reply += "1";
                         }
@@ -496,8 +508,16 @@ namespace Hyper_Ship_Battle
                         {
                             reply += "3";
                         }
+                        else if (r_board[i, j] > 0)
+                        {
+                            reply += "4";
+                        }
+                        else
+                            reply += "0";
                     }
                 }
+                string str = reply;
+                int len = reply.Length;
                 host.Send(reply);
             }
             else

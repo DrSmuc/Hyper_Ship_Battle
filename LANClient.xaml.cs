@@ -446,7 +446,22 @@ namespace Hyper_Ship_Battle
                     turn_sw();
                     turn = syncTurn;
                 }
-                int count = 2;
+
+                r_br2 = message[2] + '0';
+                r_br2 = message[3] + '0';
+                r_br3 = message[4] + '0';
+                r_br4 = message[5] + '0';
+                r_br6 = message[6] + '0';
+                r_br7 = message[7] + '0';
+
+                p_br2 = message[8] + '0';
+                p_br2 = message[9] + '0';
+                p_br3 = message[10] + '0';
+                p_br4 = message[11] + '0';
+                p_br6 = message[12] + '0';
+                p_br7 = message[13] + '0';
+
+                int count = 14;
                 for (int i = 0;i<10;i++)
                 {
                     for (int j = 0;j<10;j++)
@@ -468,6 +483,7 @@ namespace Hyper_Ship_Battle
                             rectangles_r[i, j].Fill = new SolidColorBrush(App.sinkColor);
                         }
                         count++;
+
                         if (message[count] == '0')
                         {
                             rectangles_p[i, j].Fill = new SolidColorBrush(App.emptyColor);
@@ -483,6 +499,10 @@ namespace Hyper_Ship_Battle
                         else if (message[count] == '3')
                         {
                             rectangles_p[i, j].Fill = new SolidColorBrush(App.sinkColor);
+                        }
+                        else if ((message[count] == '4'))
+                        {
+                            rectangles_p[i, j].Fill = new SolidColorBrush(App.shipColor);
                         }
                         count++;
                     }
