@@ -1,6 +1,7 @@
 ﻿using Hyper_Ship_Battle.LAN_Multiplayer;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -435,6 +436,58 @@ namespace Hyper_Ship_Battle
                 allowed = false;
                 loss();
             }
+            else if (message[0]=='y')
+            {
+                // turn, host board hits, client board hits
+
+                bool syncTurn = (message[1] == '1') ? true : false;
+                if (turn!=syncTurn)
+                {
+                    turn_sw();
+                    turn = syncTurn;
+                }
+                int count = 2;
+                for (int i = 0;i<10;i++)
+                {
+                    for (int j = 0;j<10;j++)
+                    {
+                        if (message[count] == '0')
+                        {
+                            rectangles_r[i, j].Fill = new SolidColorBrush(App.emptyColor);
+                        }
+                        else if (message[count] == '1')
+                        {
+                            rectangles_r[i, j].Fill = new SolidColorBrush(App.missColor);
+                        }
+                        else if(message[count] == '2')
+                        {
+                            rectangles_r[i, j].Fill = new SolidColorBrush(App.hitColor);
+                        }
+                        else if(message[count] == '3')
+                        {
+                            rectangles_r[i, j].Fill = new SolidColorBrush(App.sinkColor);
+                        }
+                        count++;
+                        if (message[count] == '0')
+                        {
+                            rectangles_p[i, j].Fill = new SolidColorBrush(App.emptyColor);
+                        }
+                        else if (message[count] == '1')
+                        {
+                            rectangles_p[i, j].Fill = new SolidColorBrush(App.missColor);
+                        }
+                        else if (message[count] == '2')
+                        {
+                            rectangles_p[i, j].Fill = new SolidColorBrush(App.hitColor);
+                        }
+                        else if (message[count] == '3')
+                        {
+                            rectangles_p[i, j].Fill = new SolidColorBrush(App.sinkColor);
+                        }
+                        count++;
+                    }
+                }
+            }
             else
             {
                 int x = 0, y = 0;
@@ -490,6 +543,11 @@ namespace Hyper_Ship_Battle
         {
             client.Disconnect();
             Application.Current.Exit();
+        }
+
+        private void sync_b_Click(object sender, RoutedEventArgs e)
+        {
+            client.Send("y");
         }
     }
 }

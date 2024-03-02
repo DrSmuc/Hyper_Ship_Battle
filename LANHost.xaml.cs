@@ -453,6 +453,53 @@ namespace Hyper_Ship_Battle
                 turn_sw();
                 allowed = true;
             }
+            else if (message=="y")
+            {
+                //turn 1 - client shoot, 0 - host shoot
+                string reply = "y";
+                reply += (turn) ? "0" : "1";
+                for (int i = 0;i<10;i++)
+                {
+                    for (int j = 0;j<10;j++)
+                    {
+                        Rectangle rh = rectangles_p[i, j];
+                        if ((rh.Fill as SolidColorBrush)?.Color == App.emptyColor)
+                        {
+                            reply += "0";
+                        }
+                        else if ((rh.Fill as SolidColorBrush)?.Color == App.missColor)
+                        {
+                            reply += "1";
+                        }
+                        else if ((rh.Fill as SolidColorBrush)?.Color == App.hitColor)
+                        {
+                            reply += "2";
+                        }
+                        else if ((rh.Fill as SolidColorBrush)?.Color == App.sinkColor)
+                        {
+                            reply += "3";
+                        }
+                        Rectangle rc = rectangles_r[i, j];
+                        if ((rc.Fill as SolidColorBrush)?.Color == App.emptyColor)
+                        {
+                            reply += "0";
+                        }
+                        else if ((rc.Fill as SolidColorBrush)?.Color == App.missColor)
+                        {
+                            reply += "1";
+                        }
+                        else if ((rc.Fill as SolidColorBrush)?.Color == App.hitColor)
+                        {
+                            reply += "2";
+                        }
+                        else if ((rc.Fill as SolidColorBrush)?.Color == App.sinkColor)
+                        {
+                            reply += "3";
+                        }
+                    }
+                }
+                host.Send(reply);
+            }
             else
             {
                 int x = 0, y = 0;

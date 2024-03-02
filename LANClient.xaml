@@ -47,12 +47,14 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
-
         </Grid>
 
         <TextBlock x:Name="endstatus" HorizontalAlignment="Center" TextWrapping="Wrap" Text="lorem lorem" VerticalAlignment="Center" Margin="0,0,0,150" TextAlignment="Center" FontSize="72" FontFamily="BankGothic Lt BT" FontWeight="Bold" FontStyle="Italic" Canvas.ZIndex="10" Foreground="White"/>
         <Button x:Name="home_b" Content="Home" VerticalAlignment="Center" Height="70" Width="160" HorizontalAlignment="Center" Margin="0,50,0,0" Click="home_b_Click" Background="#FF00B5FF" FontSize="24" FontFamily="BankGothic Lt BT" CornerRadius="15" FontWeight="Bold" Canvas.ZIndex="10" FocusVisualPrimaryBrush="White" FocusVisualSecondaryBrush="#99000000" BorderBrush="Transparent" Foreground="White"/>
         <Canvas x:Name="myCanvas" Canvas.ZIndex="8" Opacity="0.3" Background="#FF717171"/>
+    
+        <Button x:Name="sync_b" Content="Sync" VerticalAlignment="Center" Height="58" Width="180" FontSize="24" HorizontalAlignment="Center" Foreground="White" Margin="0,0,825,0" Click="sync_b_Click"/>
+
 
     </Grid>
 </Page>
