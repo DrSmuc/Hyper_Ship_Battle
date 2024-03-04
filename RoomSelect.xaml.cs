@@ -34,6 +34,8 @@ namespace Hyper_Ship_Battle
         public RoomSelect()
         {
             this.InitializeComponent();
+            backgroundMusic.Source = new Uri("ms-appx:///Assets/Sounds/waves-53479.mp3");
+            backgroundMusic.Play();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

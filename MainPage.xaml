@@ -26,7 +26,9 @@
 
         <TextBlock x:Name="HelloText" HorizontalAlignment="Center" Text="HYPER SHIP BATTLE" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Ravie" FontSize="72" FontWeight="Bold" FontStyle="Italic" TextDecorations="None" Margin="0,0,0,300" TextWrapping="WrapWholeWords" Foreground="White"/>
         <Button x:Name="PlayB" Content="Play" HorizontalAlignment="Center" Height="115" Width="306" FontFamily="Ravie" FontSize="72" Click="PlayB_Click" Margin="0,0,0,0" CornerRadius="15" Foreground="White"/>
-        <Button x:Name="LANB" Content="LAN Multiplayer" HorizontalAlignment="Center" Height="115" Width="542" FontFamily="Ravie" FontSize="72" Margin="0,325,0,0" CornerRadius="15" Foreground="White" VerticalAlignment="Center" Click="LANB_Click"/>
+        <Button x:Name="LANB" Content="LAN Multiplayer" HorizontalAlignment="Center" Height="115" Width="auto" FontFamily="Ravie" FontSize="72" Margin="0,325,0,0" CornerRadius="15" Foreground="White" VerticalAlignment="Center" Click="LANB_Click"/>
         <Button x:Name="ExitB" Content="Quit" HorizontalAlignment="Center" Height="115" Width="306" FontFamily="Ravie" FontSize="72" Click="exit_click" Margin="0,650,0,0" CornerRadius="15" Foreground="White"/>
+        <MediaElement x:Name="backgroundMusic" AutoPlay="True" />
+        <MediaElement x:Name="backgroundMusic2" AutoPlay="True" />
     </Grid>
 </Page>

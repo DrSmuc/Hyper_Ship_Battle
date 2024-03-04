@@ -169,6 +169,8 @@
     <Content Include="Assets\SmallTile.scale-150.png" />
     <Content Include="Assets\SmallTile.scale-200.png" />
     <Content Include="Assets\SmallTile.scale-400.png" />
+    <Content Include="Assets\Sounds\short-explosion.mp3" />
+    <Content Include="Assets\Sounds\ukulele-long.mp3" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />
@@ -211,6 +213,15 @@
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="Assets\Sounds\game-over-arcade-6435.mp3" />
+    <Content Include="Assets\Sounds\large-underwater-explosion-190270.mp3" />
+    <Content Include="Assets\Sounds\small-bomb-with-hit-46378.mp3" />
+    <Content Include="Assets\Sounds\success-fanfare-trumpets-6185.mp3" />
+    <Content Include="Assets\Sounds\ukulele-8488.mp3" />
+    <Content Include="Assets\Sounds\videogame-death-sound-43894.mp3" />
+    <Content Include="Assets\Sounds\water-splash-46402.mp3" />
+    <Content Include="Assets\Sounds\water_drop-6707.mp3" />
+    <Content Include="Assets\Sounds\waves-53479.mp3" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

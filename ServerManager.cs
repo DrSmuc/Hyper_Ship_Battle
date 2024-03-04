@@ -33,5 +33,11 @@ namespace Hyper_Ship_Battle
         {
             return host;
         }
+
+        public void ResetHost()
+        {
+            host = null;
+            host = new TcpServer();
+        }
     }
 }

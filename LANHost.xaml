@@ -54,5 +54,10 @@
         <Button x:Name="home_b" Content="Home" VerticalAlignment="Center" Height="70" Width="160" HorizontalAlignment="Center" Margin="0,50,0,0" Click="home_b_Click" Background="#FF00B5FF" FontSize="24" FontFamily="BankGothic Lt BT" CornerRadius="15" FontWeight="Bold" Canvas.ZIndex="10" FocusVisualPrimaryBrush="White" FocusVisualSecondaryBrush="#99000000" BorderBrush="Transparent" Foreground="White"/>
         <Canvas x:Name="myCanvas" Canvas.ZIndex="8" Opacity="0.3" Background="#FF717171"/>
 
+        <MediaElement x:Name="missSound" AutoPlay="False" />
+        <MediaElement x:Name="hitSound" AutoPlay="False" />
+        <MediaElement x:Name="backgroundMusic" AutoPlay="True" />
+        <MediaElement x:Name="winSound" AutoPlay="False" />
+        <MediaElement x:Name="losSound" AutoPlay="False" />
     </Grid>
 </Page>

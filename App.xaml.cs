@@ -54,6 +54,8 @@ namespace Hyper_Ship_Battle
         public static bool clientReceivedSetupSet;
         public static bool clientReceivedGameSet;
 
+        public static bool soundOn;
+
         public static int PORT_NUMBER
         {
             get { return port_number; }
@@ -95,6 +97,7 @@ namespace Hyper_Ship_Battle
             board0();
             serverActive = false;
             clientActive = false;
+            soundOn = true;
         }
 
         public static void board0()

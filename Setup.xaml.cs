@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Navigation;
 using Npgsql;
 using Hyper_Ship_Battle.LAN_Multiplayer;
 using System.Collections.Specialized;
+using System.ComponentModel.DataAnnotations;
 
 namespace Hyper_Ship_Battle
 {
@@ -72,6 +73,15 @@ namespace Hyper_Ship_Battle
         {
             InitializeGrid();
             ready = false;
+            if (App.serverActive || App.clientActive)
+            {
+                loadpreset_b.Background = new SolidColorBrush(Colors.Red);
+            }
+            else
+            {
+                loadpreset_b.Background = new SolidColorBrush(Colors.DeepSkyBlue);
+
+            }
             continue_b.Opacity = 60;
             savepreset_b.Opacity = 60;
             numberOfShipsPlaced = 0;
@@ -82,6 +92,8 @@ namespace Hyper_Ship_Battle
             b7 = false;
             ready = false;
             placingShip = false;
+            backgroundMusic.Source = new Uri("ms-appx:///Assets/Sounds/waves-53479.mp3");
+            backgroundMusic.Play();
         }
 
         private void DeleteAllChildren(Panel parentPanel)

@@ -45,6 +45,8 @@ namespace Hyper_Ship_Battle
 
         private void openned()
         {
+            backgroundMusic.Source = new Uri("ms-appx:///Assets/Sounds/waves-53479.mp3");
+            backgroundMusic.Play();
             for (int m = 0; m < 9; m++)
                 for (int i = 0; i < 10; i++)
                     for (int j = 0; j < 10; j++)

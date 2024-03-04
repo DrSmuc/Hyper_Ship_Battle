@@ -33,5 +33,11 @@ namespace Hyper_Ship_Battle
         {
             return client;
         }
+
+        public void ResetClient()
+        {
+            client = null;
+            client = new TcpClient();
+        }
     }
 }

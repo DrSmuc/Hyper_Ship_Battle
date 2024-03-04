@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Media.Protection.PlayReady;
 using Windows.Storage.Provider;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -29,17 +30,26 @@ namespace Hyper_Ship_Battle
         public MainPage()
         {
             this.InitializeComponent();
+            backgroundMusic.Source = new Uri("ms-appx:///Assets/Sounds/ukulele-long.mp3");
+            backgroundMusic.Play();
+            backgroundMusic2.Source = new Uri("ms-appx:///Assets/Sounds/waves-53479.mp3");
+            backgroundMusic2.Play();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            stringInputPopup = null;
+            
+            /*
+            backgroundMusic.Source = new Uri("ms-appx:///Assets/Sounds/ukulele-8488.mp3");
+            backgroundMusic.Play();
+            */
         }
 
         private void PlayB_Click(object sender, RoutedEventArgs e)
         {
             App.resetSetup = true;
+            backgroundMusic.Stop();
             Frame.Navigate(typeof(Setup));
         }
 
@@ -57,44 +67,40 @@ namespace Hyper_Ship_Battle
                 PrimaryButtonText = "Create room",
                 SecondaryButtonText = "Join room"
             };
+            dialogOrientation.CloseButtonText = "Cancle";
             ContentDialogResult resultName = await dialogOrientation.ShowAsync();
-            bool createRoom = (resultName == ContentDialogResult.Primary);
-            if (createRoom)
+
+            if (resultName== ContentDialogResult.Primary)
             {
-                stringInputPopup = new Popup();
-                stringInputPopup.HorizontalOffset = (Window.Current.Bounds.Width - 300) / 2;
-                stringInputPopup.VerticalOffset = (Window.Current.Bounds.Height - 200) / 2;
-                stringInputPopup.Child = CreatePopupInput();
-                stringInputPopup.IsOpen = true;
+                string roomName;
+
+                ContentDialog inputDialog = new ContentDialog
+                {
+                    Title = "Room name",
+                    Content = new TextBox(),
+                    PrimaryButtonText = "OK",
+                    CloseButtonText = "Cancel"
+                };
+
+                ContentDialogResult result = await inputDialog.ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                {
+                    TextBox textBox = inputDialog.Content as TextBox;
+                    roomName = textBox.Text;
+                    TcpServer host = ServerManager.Instance.GetHost();
+                    host.StartServer(roomName, App.PORT_NUMBER);
+                    Frame.Navigate(typeof(Setup));
+                }
             }
-            else
+            else if (resultName == ContentDialogResult.Secondary)
             {
+                backgroundMusic.Stop();
                 Frame.Navigate(typeof(RoomSelect));
             }
-        }
-
-        private StackPanel CreatePopupInput()
-        {
-
-            StackPanel panel = new StackPanel();
-            TextBox inputText = new TextBox();
-            Button continueButton = new Button();
-            string roomName;
-
-        inputText.PlaceholderText = "Enter name...";
-            continueButton.Content = "Continue";
-            continueButton.Click += (s, e) =>
+            else if (resultName == ContentDialogResult.None)
             {
-                roomName=inputText.Text;
-                stringInputPopup.IsOpen = false;
-                TcpServer host = ServerManager.Instance.GetHost();
-                host.StartServer(roomName, App.PORT_NUMBER);
-                Frame.Navigate(typeof(Setup));
-            };
-            panel.Children.Add(inputText);
-            panel.Children.Add(continueButton);
-
-            return panel;
+                // cancel
+            }
         }
     }
 }

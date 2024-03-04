@@ -86,6 +86,12 @@ namespace Hyper_Ship_Battle
             hideEnd();
             host = ServerManager.Instance.GetHost();
             host.MessageReceived += MessageReceived;
+            missSound.Source = new Uri("ms-appx:///Assets/Sounds/water-splash-46402.mp3");
+            hitSound.Source = new Uri("ms-appx:///Assets/Sounds/short-explosion.mp3");
+            backgroundMusic.Source = new Uri("ms-appx:///Assets/Sounds/waves-53479.mp3");
+            winSound.Source = new Uri("ms-appx:///Assets/Sounds/success-fanfare-trumpets-6185.mp3");
+            losSound.Source = new Uri("ms-appx:///Assets/Sounds/videogame-death-sound-43894.mp3");
+            backgroundMusic.Play();
         }
 
         private void Start()
@@ -200,6 +206,7 @@ namespace Hyper_Ship_Battle
             Rectangle rect = sender as Rectangle;
             if ((rect.Fill as SolidColorBrush)?.Color == App.emptyColor && allowed)
             {
+                missSound.Play();
                 rect.Fill = new SolidColorBrush(App.missColor);
                 allowed = false;
 
@@ -215,6 +222,7 @@ namespace Hyper_Ship_Battle
             Rectangle rect = sender as Rectangle;
             if ((rect.Fill as SolidColorBrush)?.Color == App.emptyColor && allowed)
             {
+                hitSound.Play();
                 rect.Fill = new SolidColorBrush(App.hitColor);
                 r_br2--;
                 int x = Grid.GetRow(rect);
@@ -232,6 +240,7 @@ namespace Hyper_Ship_Battle
             Rectangle rect = sender as Rectangle;
             if ((rect.Fill as SolidColorBrush)?.Color == App.emptyColor && allowed)
             {
+                hitSound.Play();
                 rect.Fill = new SolidColorBrush(App.hitColor);
                 r_br3--;
                 int x = Grid.GetRow(rect);
@@ -249,6 +258,7 @@ namespace Hyper_Ship_Battle
             Rectangle rect = sender as Rectangle;
             if ((rect.Fill as SolidColorBrush)?.Color == App.emptyColor && allowed)
             {
+                hitSound.Play();
                 rect.Fill = new SolidColorBrush(App.hitColor);
                 r_br4--;
                 int x = Grid.GetRow(rect);
@@ -266,6 +276,7 @@ namespace Hyper_Ship_Battle
             Rectangle rect = sender as Rectangle;
             if ((rect.Fill as SolidColorBrush)?.Color == App.emptyColor && allowed)
             {
+                hitSound.Play();
                 rect.Fill = new SolidColorBrush(App.hitColor);
                 r_br5--;
                 int x = Grid.GetRow(rect);
@@ -283,6 +294,7 @@ namespace Hyper_Ship_Battle
             Rectangle rect = sender as Rectangle;
             if ((rect.Fill as SolidColorBrush)?.Color == App.emptyColor && allowed)
             {
+                hitSound.Play();
                 rect.Fill = new SolidColorBrush(App.hitColor);
                 r_br6--;
                 int x = Grid.GetRow(rect);
@@ -300,6 +312,7 @@ namespace Hyper_Ship_Battle
             Rectangle rect = sender as Rectangle;
             if ((rect.Fill as SolidColorBrush)?.Color == App.emptyColor && allowed)
             {
+                hitSound.Play();
                 rect.Fill = new SolidColorBrush(App.hitColor);
                 r_br7--;
                 int x = Grid.GetRow(rect);
@@ -341,6 +354,7 @@ namespace Hyper_Ship_Battle
             Rectangle rect = rectangles_p[x, y];
             if (p_board[x, y] != 0)
             {
+                hitSound.Play();
                 rect.Fill = new SolidColorBrush(App.hitColor);
                 switch (p_board[x, y])
                 {
@@ -396,6 +410,7 @@ namespace Hyper_Ship_Battle
             }
             else
             {
+                missSound.Play();
                 rect.Fill = new SolidColorBrush(App.missColor);
             }
         }
@@ -548,7 +563,7 @@ namespace Hyper_Ship_Battle
             myCanvas.Background = new SolidColorBrush(App.shipColor);
             myCanvas.Background.Opacity = 90;
             myCanvas.Opacity = 5;
-            host.StopServer();
+            winSound.Play();
         }
         private void loss()
         {
@@ -560,7 +575,7 @@ namespace Hyper_Ship_Battle
             myCanvas.Background.Opacity = 90;
             myCanvas.Opacity = 5;
             host.MessageReceived -= MessageReceived;
-            host.StopServer();
+            losSound.Play();
         }
 
         private void home_b_Click(object sender, RoutedEventArgs e)
@@ -569,6 +584,7 @@ namespace Hyper_Ship_Battle
             App.board0();
             App.resetSetup = true;
             host.StopServer();
+            ServerManager.Instance.ResetHost();
             Frame.Navigate(typeof(MainPage));
         }
         private void exit_click(object sender, RoutedEventArgs e)
